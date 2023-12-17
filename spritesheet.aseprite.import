@@ -1,0 +1,16 @@
+[remap]
+
+importer="aseprite_wizard.plugin.tileset-texture"
+type="PackedDataContainer"
+uid="uid://bosb01urbenm8"
+path="res://.godot/imported/spritesheet.aseprite-7d992179482e2697de94f1143061d4d3.res"
+
+[deps]
+
+source_file="res://spritesheet.aseprite"
+dest_files=["res://.godot/imported/spritesheet.aseprite-7d992179482e2697de94f1143061d4d3.res"]
+
+[params]
+
+exclude_layers_pattern=""
+only_visible_layers=true
