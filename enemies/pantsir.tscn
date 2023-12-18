@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://c0wfkm054sx6r"]
+
+[ext_resource type="Texture2D" uid="uid://bvolwr3vtaonv" path="res://pantsir.png" id="1_b6x0n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q66j2"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibli8"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2odh"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3bi1e"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcps7"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85yvc"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a64u0"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tj4hc"]
+atlas = ExtResource("1_b6x0n")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2jqo6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q66j2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibli8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2odh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3bi1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcps7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85yvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a64u0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tj4hc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="pantsir" type="AnimatedSprite2D"]
+z_index = 10
+sprite_frames = SubResource("SpriteFrames_2jqo6")
+autoplay = "default"

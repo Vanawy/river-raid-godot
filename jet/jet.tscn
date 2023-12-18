@@ -1,0 +1,126 @@
+[gd_scene load_steps=16 format=3 uid="uid://bjde4s1d47ju0"]
+
+[ext_resource type="Script" path="res://Jet.gd" id="1_bcyqu"]
+[ext_resource type="Texture2D" uid="uid://cngj2e3n1au6w" path="res://spritesheet.png" id="2_mexrt"]
+[ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="3_h3uwq"]
+[ext_resource type="Texture2D" uid="uid://bxl32a122p23a" path="res://flare.png" id="4_i5c3d"]
+[ext_resource type="Texture2D" uid="uid://cte82o442osiw" path="res://flare-trail.png" id="5_772xe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqvwe"]
+atlas = ExtResource("2_mexrt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnh0t"]
+atlas = ExtResource("2_mexrt")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6xpt"]
+atlas = ExtResource("2_mexrt")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqgyx"]
+atlas = ExtResource("2_mexrt")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06jt6"]
+atlas = ExtResource("2_mexrt")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1awuj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqvwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnh0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6xpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqgyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06jt6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ml3tu"]
+radius = 3.0
+height = 16.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_25yc1"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 0.3, 0)
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6q6oa"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 98, 0)
+sub_emitter_mode = 1
+sub_emitter_frequency = 100.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p308w"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+color = Color(0.839216, 0.839216, 0.839216, 1)
+
+[node name="Jet" type="CharacterBody2D"]
+z_index = 100
+position = Vector2(160, 96)
+collision_layer = 256
+collision_mask = 3
+script = ExtResource("1_bcyqu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1awuj")
+frame = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ml3tu")
+debug_color = Color(0, 0.647059, 0.262745, 0.419608)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+position = Vector2(0, -59)
+remote_path = NodePath("../../Camera2D")
+update_rotation = false
+update_scale = false
+
+[node name="Smoke" type="GPUParticles2D" parent="."]
+z_index = -1
+position = Vector2(0, 7)
+amount = 400
+process_material = SubResource("ParticleProcessMaterial_25yc1")
+texture = ExtResource("3_h3uwq")
+visibility_rect = Rect2(-1, 0, 2, 2)
+
+[node name="Flares" type="GPUParticles2D" parent="."]
+z_index = -5
+position = Vector2(0, 4)
+amount = 32
+sub_emitter = NodePath("../FlaresTrails")
+process_material = SubResource("ParticleProcessMaterial_6q6oa")
+texture = ExtResource("4_i5c3d")
+lifetime = 5.0
+explosiveness = 0.95
+
+[node name="FlaresTrails" type="GPUParticles2D" parent="."]
+z_index = -7
+amount = 300
+process_material = SubResource("ParticleProcessMaterial_p308w")
+texture = ExtResource("5_772xe")
+lifetime = 0.4
