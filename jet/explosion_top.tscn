@@ -95,7 +95,6 @@ animations = [{
 }]
 
 [node name="ExplosionTop" type="AnimatedSprite2D"]
-position = Vector2(-40, 0)
 sprite_frames = SubResource("SpriteFrames_hgpaa")
 autoplay = "default"
 flip_h = true

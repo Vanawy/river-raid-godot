@@ -95,7 +95,6 @@ animations = [{
 }]
 
 [node name="ExplosionLeft" type="AnimatedSprite2D"]
-position = Vector2(-56, 0)
 sprite_frames = SubResource("SpriteFrames_70odv")
 autoplay = "default"
 flip_h = true

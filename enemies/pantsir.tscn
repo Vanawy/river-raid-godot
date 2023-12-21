@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0wfkm054sx6r"]
+[gd_scene load_steps=14 format=3 uid="uid://c0wfkm054sx6r"]
 
 [ext_resource type="Texture2D" uid="uid://bvolwr3vtaonv" path="res://pantsir.png" id="1_b6x0n"]
 
@@ -66,7 +66,52 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iknb1"]
+size = Vector2(128, 64)
+
+[sub_resource type="Animation" id="Animation_4k8vq"]
+resource_name = "scan"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D/CollisionShape2D/Line2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-65, 0), Vector2(65, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_srp7q"]
+_data = {
+"scan": SubResource("Animation_4k8vq")
+}
+
 [node name="pantsir" type="AnimatedSprite2D"]
 z_index = 10
 sprite_frames = SubResource("SpriteFrames_2jqo6")
 autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_iknb1")
+
+[node name="Line2D" type="Line2D" parent="Area2D/CollisionShape2D"]
+position = Vector2(64.6975, 0)
+rotation = -0.00197541
+points = PackedVector2Array(0, 30, 0, -30)
+width = 2.0
+default_color = Color(0, 0.901961, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_srp7q")
+}
+autoplay = "scan"

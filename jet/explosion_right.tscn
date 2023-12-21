@@ -95,6 +95,5 @@ animations = [{
 }]
 
 [node name="ExplosionRight" type="AnimatedSprite2D"]
-position = Vector2(-24, 0)
 sprite_frames = SubResource("SpriteFrames_70odv")
 autoplay = "default"
