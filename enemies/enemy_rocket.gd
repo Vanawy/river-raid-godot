@@ -3,7 +3,7 @@ class_name EnemyRocket
 
 const MAX_SPEED = 140
 
-var speed = MAX_SPEED
+@export var speed = 30
 
 @export var _target : Jet = null
 
@@ -16,16 +16,24 @@ func _ready():
 	var visibility_notifier = $VisibleOnScreenNotifier2D as VisibleOnScreenNotifier2D
 	visibility_notifier.screen_exited.connect(destroy)
 
+func _process(delta: float) -> void:
+	queue_redraw()
+
 func _physics_process(delta):
+	if speed == 0:
+		return
+		
 	#position += velocity * delta
-	rotation = lerp(rotation, _target_rotation, delta * 3)
+	speed = lerpf(speed, MAX_SPEED, delta)
+	if (abs(_target_rotation - rotation) > 0.1):
+		rotation = lerp(rotation, _target_rotation, delta)
 	move_local_x(speed * delta)
 	var col = move_and_collide(Vector2.ZERO) as KinematicCollision2D
 	if col and col.get_collider() is Level:
 		destroy()
 	
 	if _target and not is_confused:
-		_target_rotation += get_angle_to(_target.global_position)
+		_target_rotation = rotation + get_angle_to(_target.global_position)
 		
 		if _target.is_dead:
 			confuse()
@@ -41,5 +49,20 @@ func destroy():
 	$CollisionShape2D.set_deferred("disabled", false)
 	$CollisionShape2D/Smoke.emitting = false
 	$CollisionShape2D/Rocket.visible = false
+	var explosion = $Explosion as AnimatedSprite2D
+	explosion.visible = true
+	explosion.play()
+	await explosion.animation_finished
 	await get_tree().create_timer(2).timeout
 	queue_free()
+	
+func set_target(target : Node2D):
+	_target = target
+	
+func _draw() -> void:
+	if !_target:
+		return
+	draw_line(to_local(global_position), to_local(_target.global_position), Color.RED)
+	draw_circle(to_local(_target.global_position), 8, Color.RED)
+	
+	draw_line(Vector2(0, 0), Vector2(1000, 0).rotated(_target_rotation - rotation), Color.REBECCA_PURPLE, 1)

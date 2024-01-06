@@ -1,8 +1,56 @@
-[gd_scene load_steps=9 format=3 uid="uid://d36pnpljbr751"]
+[gd_scene load_steps=15 format=3 uid="uid://d36pnpljbr751"]
 
 [ext_resource type="Texture2D" uid="uid://256xhn5uso6o" path="res://jet/rocket.png" id="1_3fllm"]
 [ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="2_lbjfk"]
 [ext_resource type="Script" path="res://jet/rocket.gd" id="2_mn0hb"]
+[ext_resource type="Texture2D" uid="uid://8u3mnaoxx7lr" path="res://explosion_top.png" id="4_jaivy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j71a1"]
+radius = 3.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b3qkp"]
+lifetime_randomness = 0.38
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.3, 0)
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 10, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pci5"]
+atlas = ExtResource("4_jaivy")
+region = Rect2(144, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_coyqu"]
+atlas = ExtResource("4_jaivy")
+region = Rect2(144, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vg3p1"]
+atlas = ExtResource("4_jaivy")
+region = Rect2(160, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocs52"]
+atlas = ExtResource("4_jaivy")
+region = Rect2(168, 8, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2rdht"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pci5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_coyqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vg3p1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocs52")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_djkb0"]
 atlas = ExtResource("1_3fllm")
@@ -26,42 +74,39 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b3qkp"]
-lifetime_randomness = 0.38
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(0.5, 0.3, 0)
-direction = Vector3(0, 1, 0)
-gravity = Vector3(0, 10, 0)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_j71a1"]
-radius = 3.0
-
-[node name="Rocket" type="AnimatedSprite2D"]
-z_index = 5
-sprite_frames = SubResource("SpriteFrames_bj14m")
-autoplay = "default"
-frame_progress = 0.666847
-centered = false
-offset = Vector2(-2, 0)
+[node name="Hitbox" type="Area2D"]
+collision_layer = 512
+collision_mask = 3
 script = ExtResource("2_mn0hb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_j71a1")
 
 [node name="Smoke" type="GPUParticles2D" parent="."]
 z_index = -1
-position = Vector2(0, 6)
+position = Vector2(-6, 0)
+rotation = 1.57079
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_b3qkp")
 texture = ExtResource("2_lbjfk")
 visibility_rect = Rect2(-1, 0, 2, 200)
 
-[node name="Hitbox" type="Area2D" parent="."]
-position = Vector2(-2, 0)
-collision_layer = 512
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(2, 3)
-shape = SubResource("CircleShape2D_j71a1")
-
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rotation = 1.57079
 rect = Rect2(-5, 0, 10, 100)
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 10
+position = Vector2(-2, 0)
+sprite_frames = SubResource("SpriteFrames_2rdht")
+
+[node name="Rocket" type="AnimatedSprite2D" parent="."]
+z_index = 5
+rotation = 1.57079
+sprite_frames = SubResource("SpriteFrames_bj14m")
+autoplay = "default"
+frame_progress = 0.666847
+centered = false
+offset = Vector2(-2, 0)

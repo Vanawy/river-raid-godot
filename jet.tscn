@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://chvnmx1w7aeo4"]
+[gd_scene load_steps=12 format=3 uid="uid://chvnmx1w7aeo4"]
 
 [ext_resource type="Script" path="res://Jet.gd" id="1_3uivr"]
 [ext_resource type="SpriteFrames" uid="uid://boaxed37mb2im" path="res://jet/jet_blue_sprites.tres" id="2_gc1od"]
@@ -39,11 +39,14 @@ height = 16.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hb738"]
 size = Vector2(42, 50)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1q7eu"]
+radius = 3.0
+
 [node name="Jet" type="AnimatableBody2D"]
 z_index = 100
 position = Vector2(160, 96)
-collision_layer = 0
-collision_mask = 0
+collision_layer = 256
+collision_mask = 13
 script = ExtResource("1_3uivr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -93,3 +96,7 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CounterMeasuresArea"]
 position = Vector2(0, 25)
 shape = SubResource("RectangleShape2D_hb738")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_1q7eu")

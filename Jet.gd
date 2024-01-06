@@ -26,7 +26,7 @@ var state : States = States.FORWARD
 
 var is_dead = false
 
-var _flares_count = 3
+@export var _flares_count = 3
 
 func _ready(): 
 	var hitbox : Area2D = $Hitbox
@@ -58,9 +58,10 @@ func _process(delta):
 		
 func fire():
 	var new_rocket = rocket_scn.instantiate() as Rocket
-	add_sibling(new_rocket)
-	new_rocket.velocity.y += velocity.y
+	add_sibling.call_deferred(new_rocket)
+	new_rocket.speed += -velocity.y
 	new_rocket.global_position = global_position
+	new_rocket.global_rotation = -PI/2
 	
 func update_state():
 	var hspeed = abs(velocity.x)
@@ -118,4 +119,4 @@ func create_explosion():
 	elif state < States.FORWARD:
 		n = 1
 	var explosion = explosion_scenes[n].instantiate() as Node2D
-	add_child(explosion)
+	add_child.call_deferred(explosion)

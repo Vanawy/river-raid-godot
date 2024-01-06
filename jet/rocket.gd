@@ -1,25 +1,30 @@
-extends AnimatedSprite2D
+extends Area2D
 class_name Rocket
 
 
-var velocity = Vector2(0, -100)
+var speed = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var visibility_notifier = $VisibleOnScreenNotifier2D as VisibleOnScreenNotifier2D
 	visibility_notifier.screen_exited.connect(destroy)
-	
-	var hitbox = $Hitbox as Area2D
-	hitbox.body_entered.connect(hit)
+	body_entered.connect(hit)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 func _physics_process(delta):
-	position += velocity * delta
+	move_local_x(speed * delta)
 	
 func destroy():
+	speed = 0
+	$Smoke.emitting = false
+	$Rocket.visible = false
+	var explosion = $Explosion as AnimatedSprite2D
+	explosion.visible = true
+	explosion.play()
+	await get_tree().create_timer(2).timeout
 	queue_free()
 
 func hit(body : Node2D):
