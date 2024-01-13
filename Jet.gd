@@ -47,6 +47,8 @@ func on_collision(body : Node2D):
 			body.destroy()
 	if body is Level:
 		death()
+	if body is Enemy:
+		death()
 
 func _process(delta):
 	if is_dead:
