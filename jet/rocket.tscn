@@ -94,6 +94,7 @@ visibility_rect = Rect2(-1, 0, 2, 200)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rotation = 1.57079
+scale = Vector2(1, 0.143751)
 rect = Rect2(-5, 0, 10, 100)
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
