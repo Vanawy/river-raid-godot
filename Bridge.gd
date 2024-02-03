@@ -10,6 +10,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	spriteDestroyed.visible = false
 	bridgeEntity.destroyed.connect(func():
 		vehiclesLine.emitting = false
 		vehiclesLine.visible = false
