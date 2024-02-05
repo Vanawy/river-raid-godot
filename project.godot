@@ -25,6 +25,13 @@ window/size/window_height_override=576
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 
+[file_customization]
+
+folder_colors={
+"res://enemies/": "red",
+"res://jet/": "blue"
+}
+
 [input]
 
 move_left={

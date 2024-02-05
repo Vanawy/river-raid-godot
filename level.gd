@@ -49,11 +49,11 @@ func generate_level():
 		
 	var displacement_noise : FastNoiseLite = FastNoiseLite.new()
 	#displacement_noise.seed = 1231 + Level.count
-	displacement_noise.seed = Time.get_unix_time_from_system()
+	displacement_noise.seed = Time.get_unix_time_from_system() + Level.count
 	
 	var width_noise : FastNoiseLite = FastNoiseLite.new()
 	#width_noise.seed = 4365 + Level.count
-	width_noise.seed = Time.get_unix_time_from_system()
+	width_noise.seed = Time.get_unix_time_from_system() + 1090 + Level.count
 	
 	#for i in range(0, 11):
 		#print(curve(i / 10.0))
@@ -75,12 +75,19 @@ func generate_level():
 	for y in range(grid_size.y):
 		var yn: float = y / grid_size.y
 		var c = curve(yn)
-		var r = 0.5 - displacement_noise.get_noise_1d(y)
-		var displacement = 0.5 + r * c * 0.3
+		var r = displacement_noise.get_noise_1d(y) / 2
+		var displacement_n = 0.5 + r * c * 0.7
+		var displacement = displacement_n * grid_size.x
 		
-		var min_width = 0.1
-		var max_width = 0.3
-		var width = min_width + (0.5 + width_noise.get_noise_1d(y) * c) * (max_width - min_width)
+		var min_width = 2
+		var max_width = 6
+		var width = min_width \
+			+ absf(width_noise.get_noise_1d(y)) * c \
+			* (max_width - min_width)
+							
+		var left_b = displacement - width
+		var right_b = displacement + width
+			
 		
 		for x in range(grid_size.x):
 			var xn: float = x / grid_size.x
@@ -91,15 +98,13 @@ func generate_level():
 				#color = color.blend(curve_color)
 			#if xn < r:
 				#color = color.blend(rand_color)
-			#if xn < displacement:
-				#color = color.blend(comb_color)
-			#if xn < width:
-				#color = color.blend(width_color)
-				
-			var left_b = displacement - width
-			var right_b = displacement + width
-			if xn > left_b && xn < right_b:
+			if xn < displacement_n:
 				color = color.blend(comb_color)
+			if x < width * c:
+				color = color.blend(width_color)
+				
+			if x > left_b && x < right_b:
+				#color = color.blend(comb_color)
 				place_tile = false
 				#if width > min_width * 2:
 					#if xn > left_b + min_width && xn < right_b - min_width:
