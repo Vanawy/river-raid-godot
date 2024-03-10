@@ -15,6 +15,7 @@ enum States {
 }
 var state : States = States.FORWARD
 
+var hp = 1
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var smoke_emitter : GPUParticles2D = $Smoke
@@ -37,9 +38,6 @@ func _ready():
 	)
 
 func on_collision(body : Node2D):
-	if body is Rocket:
-		death()
-		body.destroy()
 	if body is Jet:
 		death()
 		body.death()
@@ -51,8 +49,6 @@ func _process(delta):
 	update_state()
 
 func update_state():
-	if is_dead:
-		return
 	var hspeed = abs(velocity.x)
 	if hspeed > 24:
 		state = States.FULL_LEFT if velocity.x < 0 else States.FULL_RIGHT 
@@ -72,7 +68,14 @@ func _physics_process(delta):
 	smoke_emitter.amount_ratio = 1 + z * 0.3
 	
 	position += transform.basis_xform(velocity * delta)
+	#position += velocity * delta
 	
+func damage():
+	if is_dead:
+		return
+	hp -= 1
+	if hp < 1:
+		death()
 	
 func death():
 	is_dead = true
@@ -80,6 +83,8 @@ func death():
 	create_explosion()
 	$Smoke.emitting = false
 	($AnimatedSprite2D as AnimatedSprite2D).play("explosion")
+	var hitbox = $Hitbox as Area2D
+	hitbox.body_entered.disconnect(on_collision)
 
 @onready var explosion_scenes = [
 	preload("res://jet/explosion_top.tscn"),
@@ -88,16 +93,16 @@ func death():
 ]
 
 func launch_flares(rocket: Node2D):
-		if rocket.is_confused:
-			return
-		if _flares_count < 1:
-			print("no flares left")
-			return
-		flares.restart()
-		_flares_count -= 1
-		await get_tree().create_timer(0.1).timeout
-		if (is_instance_valid(rocket)):
-			rocket.confuse()
+	if rocket.is_confused:
+		return
+	if _flares_count < 1:
+		print("no flares left")
+		return
+	flares.restart()
+	_flares_count -= 1
+	await get_tree().create_timer(0.1).timeout
+	if (is_instance_valid(rocket)):
+		rocket.confuse()
 
 func create_explosion():
 	pass

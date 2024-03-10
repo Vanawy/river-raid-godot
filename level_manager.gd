@@ -1,4 +1,5 @@
 extends Node2D
+class_name LevelManager
 
 var level_scene = preload("res://level.tscn")
 
@@ -20,8 +21,9 @@ func switch_level():
 
 func generate_next_level():
 	var new_level = level_scene.instantiate() as Level
-	new_level.player_almost_reached_bridge.connect(generate_next_level)
 	add_child.call_deferred(new_level)
-	new_level.global_position = current_level.level_end.global_position
+	new_level.player_almost_reached_bridge.connect(generate_next_level)
 	next_level = new_level
+	await next_level.level_created
+	new_level.global_position = current_level.level_end.global_position
 	next_level.bridge.destroyed.connect(switch_level)

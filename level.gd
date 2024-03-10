@@ -5,8 +5,10 @@ static var count = 0
 var level_id = 0
 
 signal player_almost_reached_bridge
+signal level_created
 
 var cell_size = Vector2(16, 16)
+
 @onready var bot_left: Node2D = $Bot
 @onready var top_right: Node2D = $Top
 @onready var level_end: Node2D = $LevelEnd
@@ -31,6 +33,8 @@ func _ready():
 	)
 	
 	print("level " + str(level_id) + "created")
+	
+	level_created.emit()
 	
 	
 

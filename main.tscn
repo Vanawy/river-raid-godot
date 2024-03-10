@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c0wfkm054sx6r" path="res://enemies/pantsir.tscn" id="7_1big6"]
 [ext_resource type="Texture2D" uid="uid://jesxgryyxtja" path="res://boat-medium.png" id="7_a7gyg"]
 [ext_resource type="Script" path="res://enemy.gd" id="7_puojd"]
-[ext_resource type="PackedScene" uid="uid://b0uxsl72q6fgj" path="res://enemies/jet/jet.tscn" id="7_ykkxg"]
+[ext_resource type="PackedScene" uid="uid://b0uxsl72q6fgj" path="res://enemies/jet/enemy_jet.tscn" id="7_ykkxg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g61iu"]
 size = Vector2(28.835, 10)
@@ -15,6 +15,7 @@ size = Vector2(28.835, 10)
 
 [node name="Jet" parent="." instance=ExtResource("1_x0prs")]
 position = Vector2(160, 252)
+_flares_count = 0
 
 [node name="RemoteCamera" type="RemoteTransform2D" parent="Jet"]
 position = Vector2(0, -59)
@@ -65,8 +66,4 @@ position = Vector2(-0.417496, 0)
 shape = SubResource("RectangleShape2D_g61iu")
 
 [node name="Jet3" parent="." instance=ExtResource("7_ykkxg")]
-position = Vector2(192, 160)
-
-[node name="Jet4" parent="." instance=ExtResource("7_ykkxg")]
-position = Vector2(128, 160)
-rotation = -3.14159
+position = Vector2(160, 192)

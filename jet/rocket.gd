@@ -1,7 +1,6 @@
 extends Area2D
 class_name Rocket
 
-
 var speed = 100
 
 # Called when the node enters the scene tree for the first time.
@@ -28,8 +27,14 @@ func destroy():
 	queue_free()
 
 func hit(body : Node2D):
-	destroy()
 	#if body is Level:
 		#destroy()
 	if body is Enemy:
 		body.damage()
+		
+	if body is EnemyJet:
+		if (body as EnemyJet).is_dead:
+			return
+		body.damage()
+		
+	destroy()
