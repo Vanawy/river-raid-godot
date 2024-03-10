@@ -1,11 +1,27 @@
 extends Node2D
 
+var level_scene = preload("res://level.tscn")
+
+@onready var current_level : Level = $Level
+var next_level : Level = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	current_level.player_almost_reached_bridge.connect(generate_next_level)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+func switch_level():
+	current_level = next_level
+	next_level = null
+
+func generate_next_level():
+	var new_level = level_scene.instantiate() as Level
+	new_level.player_almost_reached_bridge.connect(generate_next_level)
+	add_child.call_deferred(new_level)
+	new_level.global_position = current_level.level_end.global_position
+	next_level = new_level
+	next_level.bridge.destroyed.connect(switch_level)

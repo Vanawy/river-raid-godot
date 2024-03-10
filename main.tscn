@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://byl36k88mr2i1"]
+[gd_scene load_steps=9 format=3 uid="uid://byl36k88mr2i1"]
 
 [ext_resource type="PackedScene" uid="uid://chvnmx1w7aeo4" path="res://jet.tscn" id="1_x0prs"]
 [ext_resource type="PackedScene" uid="uid://c00tkgqhnwlyi" path="res://level_manager.tscn" id="3_2107l"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c0wfkm054sx6r" path="res://enemies/pantsir.tscn" id="7_1big6"]
 [ext_resource type="Texture2D" uid="uid://jesxgryyxtja" path="res://boat-medium.png" id="7_a7gyg"]
 [ext_resource type="Script" path="res://enemy.gd" id="7_puojd"]
+[ext_resource type="PackedScene" uid="uid://b0uxsl72q6fgj" path="res://enemies/jet/jet.tscn" id="7_ykkxg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g61iu"]
 size = Vector2(28.835, 10)
@@ -62,3 +63,10 @@ frame_progress = 0.0580407
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boat"]
 position = Vector2(-0.417496, 0)
 shape = SubResource("RectangleShape2D_g61iu")
+
+[node name="Jet3" parent="." instance=ExtResource("7_ykkxg")]
+position = Vector2(192, 160)
+
+[node name="Jet4" parent="." instance=ExtResource("7_ykkxg")]
+position = Vector2(128, 160)
+rotation = -3.14159

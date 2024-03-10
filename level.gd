@@ -2,24 +2,26 @@ extends TileMap
 class_name Level
 
 static var count = 0
-var segment_id = 0
+var level_id = 0
 
 signal player_almost_reached_bridge
-signal bridge_destroyed 
 
-@export var cell_size = Vector2(16, 16)
-@export var bot_left: Node2D;
-@export var top_right: Node2D;
+var cell_size = Vector2(16, 16)
+@onready var bot_left: Node2D = $Bot
+@onready var top_right: Node2D = $Top
+@onready var level_end: Node2D = $LevelEnd
+
+@onready var bridge : Enemy = $Bridge/Bridge
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Level.count += 1
-	segment_id = Level.count
+	level_id = Level.count
 	
 	generate_level()
 	
 	($UnloadLevelTrigger as Area2D).body_entered.connect(func (body):
-		print("level segment " + str(segment_id) + " freed")
+		print("level " + str(level_id) + " destroyed")
 		queue_free()
 	)
 	
@@ -27,6 +29,8 @@ func _ready():
 		print("player almost reached end")
 		player_almost_reached_bridge.emit()
 	)
+	
+	print("level " + str(level_id) + "created")
 	
 	
 
