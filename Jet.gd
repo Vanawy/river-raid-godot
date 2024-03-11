@@ -12,7 +12,7 @@ enum States {
 var H_SPEED = 70
 
 var BASE_V_SPEED = 70
-var V_SPEED_CHANGE = 32
+var V_SPEED_CHANGE = 100
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var smoke_emitter : GPUParticles2D = $Smoke
@@ -36,8 +36,6 @@ func _ready():
 		if body is EnemyRocket:
 			launch_flares(body)
 	)
-	
-	
 	
 
 func on_collision(body : Node2D):

@@ -14,26 +14,32 @@ var cell_size = Vector2(16, 16)
 @onready var level_end: Node2D = $LevelEnd
 
 @onready var bridge : Enemy = $Bridge/Bridge
+@onready var enemy_spawner : EnemySpawner = $EnemySpawner
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Level.count += 1
 	level_id = Level.count
 	
+
+	print("generation - start")
 	generate_level()
+	print("generation - end")
 	
-	($UnloadLevelTrigger as Area2D).body_entered.connect(func (body):
+	($UnloadLevelTrigger as Area2D).body_entered.connect(func (_body):
 		print("level " + str(level_id) + " destroyed")
 		queue_free()
 	)
 	
-	($NextLevelLoadTrigger as Area2D).body_entered.connect(func (body):
+	($NextLevelLoadTrigger as Area2D).body_entered.connect(func (_body):
 		print("player almost reached end")
 		player_almost_reached_bridge.emit()
 	)
 	
 	print("level " + str(level_id) + "created")
-	
+
+	enemy_spawner.spawn_jets(bot_left, top_right, 10)
+
 	level_created.emit()
 	
 	
@@ -80,7 +86,12 @@ func generate_level():
 	var width_color = Color.BLUE
 	width_color.a = 0.3
 	
+	var tree = get_tree()
+	
 	for y in range(grid_size.y):
+		if tree:
+			await tree.process_frame
+			
 		var yn: float = y / grid_size.y
 		var c = curve(yn)
 		var r = displacement_noise.get_noise_1d(y) / 2

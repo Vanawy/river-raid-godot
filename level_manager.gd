@@ -21,6 +21,7 @@ func switch_level():
 
 func generate_next_level():
 	var new_level = level_scene.instantiate() as Level
+	new_level.global_position = Vector2(-10000, 0)
 	add_child.call_deferred(new_level)
 	new_level.player_almost_reached_bridge.connect(generate_next_level)
 	next_level = new_level

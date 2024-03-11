@@ -5,11 +5,11 @@ const MAX_SPEED = 140
 
 @export var speed = 30
 
-@export var _target : Jet = null
+@export var target : Jet = null
 
 var is_confused = false
 
-var _target_rotation = rotation
+var target_rotation = rotation
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,23 +25,23 @@ func _physics_process(delta):
 		
 	#position += velocity * delta
 	speed = lerpf(speed, MAX_SPEED, delta)
-	if (abs(_target_rotation - rotation) > 0.1):
-		rotation = lerp(rotation, _target_rotation, delta)
+	if (abs(target_rotation - rotation) > 0.1):
+		rotation = lerp(rotation, target_rotation, delta)
 	move_local_x(speed * delta)
 	var col = move_and_collide(Vector2.ZERO) as KinematicCollision2D
 	if col and col.get_collider() is Level:
 		destroy()
 	
-	if _target and not is_confused:
-		_target_rotation = rotation + get_angle_to(_target.global_position)
+	if target and not is_confused:
+		target_rotation = rotation + get_angle_to(target.global_position)
 		
-		if _target.is_dead:
+		if target.is_dead:
 			confuse()
 	
 func confuse():
 	is_confused = true
-	_target = null
-	_target_rotation += [-PI/2, PI/2].pick_random()
+	target = null
+	target_rotation += [-PI/2, PI/2].pick_random()
 	
 	
 func destroy():
@@ -56,13 +56,13 @@ func destroy():
 	await get_tree().create_timer(2).timeout
 	queue_free()
 	
-func set_target(target : Node2D):
-	_target = target
+func set_target(new_target : Node2D):
+	target = new_target
 	
 func _draw() -> void:
-	if !_target:
+	if !target:
 		return
-	draw_line(to_local(global_position), to_local(_target.global_position), Color.RED)
-	draw_circle(to_local(_target.global_position), 8, Color.RED)
+	draw_line(to_local(global_position), to_local(target.global_position), Color.RED)
+	draw_circle(to_local(target.global_position), 8, Color.RED)
 	
-	draw_line(Vector2(0, 0), Vector2(1000, 0).rotated(_target_rotation - rotation), Color.REBECCA_PURPLE, 1)
+	draw_line(Vector2(0, 0), Vector2(1000, 0).rotated(target_rotation - rotation), Color.REBECCA_PURPLE, 1)

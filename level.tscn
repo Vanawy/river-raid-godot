@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ch67xec0i6ulx"]
+[gd_scene load_steps=12 format=3 uid="uid://ch67xec0i6ulx"]
 
 [ext_resource type="TileSet" uid="uid://dw3ktkni1qm1w" path="res://tileset.tres" id="1_2lcah"]
 [ext_resource type="Script" path="res://level.gd" id="2_a1swu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://nq7wy07f7eff" path="res://p_vehicles.png" id="4_22n7y"]
 [ext_resource type="Texture2D" uid="uid://cngj2e3n1au6w" path="res://spritesheet.png" id="5_ib5mq"]
 [ext_resource type="Script" path="res://enemy.gd" id="6_t8jai"]
+[ext_resource type="Script" path="res://enemies/EnemySpawner.gd" id="7_d4uah"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_05i8x"]
 size = Vector2(320, 512)
@@ -110,3 +111,6 @@ region_rect = Rect2(80, 32, 32, 16)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bridge/Bridge"]
 position = Vector2(16, 8)
 shape = SubResource("RectangleShape2D_g5jmo")
+
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("7_d4uah")
