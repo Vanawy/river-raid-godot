@@ -44,11 +44,6 @@ func _ready():
 	
 	
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
 func _input(event: InputEvent) -> void:
 	if event.as_text() == "F2":
 		get_tree().reload_current_scene()

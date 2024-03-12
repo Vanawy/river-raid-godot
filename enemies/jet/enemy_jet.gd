@@ -42,7 +42,7 @@ func on_collision(body : Node2D):
 		death()
 		body.death()
 
-func _process(delta):
+func _process(_delta):
 	if is_dead:
 		return
 		
@@ -106,3 +106,9 @@ func launch_flares(rocket: Node2D):
 
 func create_explosion():
 	pass
+
+
+func _draw():
+	var size = 1000
+	draw_line(Vector2(-size, 0), Vector2(size, 0), Color.RED, 2);
+	draw_line(Vector2(0, -size), Vector2(0, size), Color.RED, 2);

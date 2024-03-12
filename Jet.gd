@@ -48,7 +48,7 @@ func on_collision(body : Node2D):
 	if body is Enemy:
 		death()
 
-func _process(delta):
+func _process(_delta):
 	if is_dead:
 		return
 		

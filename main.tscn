@@ -1,12 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://byl36k88mr2i1"]
 
-[ext_resource type="PackedScene" uid="uid://chvnmx1w7aeo4" path="res://jet.tscn" id="1_x0prs"]
+[ext_resource type="PackedScene" uid="uid://chvnmx1w7aeo4" path="res://jet/jet.tscn" id="1_x0prs"]
 [ext_resource type="PackedScene" uid="uid://c00tkgqhnwlyi" path="res://level_manager.tscn" id="3_2107l"]
 [ext_resource type="TileSet" uid="uid://dw3ktkni1qm1w" path="res://tileset.tres" id="6_ofgak"]
 [ext_resource type="PackedScene" uid="uid://c0wfkm054sx6r" path="res://enemies/pantsir.tscn" id="7_1big6"]
 [ext_resource type="Texture2D" uid="uid://jesxgryyxtja" path="res://boat-medium.png" id="7_a7gyg"]
 [ext_resource type="Script" path="res://enemy.gd" id="7_puojd"]
-[ext_resource type="PackedScene" uid="uid://ccf3qfrijrgsy" path="res://enemies/jet/enemy_jet_fix.tscn" id="7_w83ht"]
+[ext_resource type="PackedScene" uid="uid://b0uxsl72q6fgj" path="res://enemies/jet/enemy_jet.tscn" id="7_w83ht"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g61iu"]
 size = Vector2(28.835, 10)

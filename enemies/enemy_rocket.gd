@@ -16,7 +16,7 @@ func _ready():
 	var visibility_notifier = $VisibleOnScreenNotifier2D as VisibleOnScreenNotifier2D
 	visibility_notifier.screen_exited.connect(destroy)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _physics_process(delta):
