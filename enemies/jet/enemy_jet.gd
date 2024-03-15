@@ -19,23 +19,23 @@ var hp = 1
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var smoke_emitter : GPUParticles2D = $Smoke
-@onready var flares : GPUParticles2D = $Flares
+# @onready var flares : GPUParticles2D = $Flares
 
 
 var velocity = Vector2.ZERO
 
 var is_dead = false
 
-@export var _flares_count = 1
+# @export var _flares_count = 1
 
 func _ready(): 
 	var hitbox : Area2D = $Hitbox
 	hitbox.body_entered.connect(on_collision)
-	var countermeasures_area : Area2D = $CounterMeasuresArea
-	countermeasures_area.body_entered.connect(func(body: Node2D):
-		if body is EnemyRocket:
-			launch_flares(body)
-	)
+	# var countermeasures_area : Area2D = $CounterMeasuresArea
+	# countermeasures_area.body_entered.connect(func(body: Node2D):
+	# 	if body is EnemyRocket:
+	# 		launch_flares(body)
+	# )
 
 func on_collision(body : Node2D):
 	if body is Jet:
@@ -82,7 +82,7 @@ func death():
 	velocity = Vector2.ZERO
 	create_explosion()
 	$Smoke.emitting = false
-	($AnimatedSprite2D as AnimatedSprite2D).play("explosion")
+	sprite.play("explosion")
 	var hitbox = $Hitbox as Area2D
 	hitbox.body_entered.disconnect(on_collision)
 
@@ -92,17 +92,17 @@ func death():
 	preload("res://jet/explosion_right.tscn"),
 ]
 
-func launch_flares(rocket: Node2D):
-	if rocket.is_confused:
-		return
-	if _flares_count < 1:
-		print("no flares left")
-		return
-	flares.restart()
-	_flares_count -= 1
-	await get_tree().create_timer(0.1).timeout
-	if (is_instance_valid(rocket)):
-		rocket.confuse()
+# func launch_flares(rocket: Node2D):
+# 	if rocket.is_confused:
+# 		return
+# 	if _flares_count < 1:
+# 		print("no flares left")
+# 		return
+# 	flares.restart()
+# 	_flares_count -= 1
+# 	await get_tree().create_timer(0.1).timeout
+# 	if (is_instance_valid(rocket)):
+# 		rocket.confuse()
 
 func create_explosion():
 	pass
