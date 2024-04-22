@@ -1,19 +1,15 @@
 extends AnimatableBody2D
 class_name Enemy
 
-@export var hp = 1
+@export var hp : int = 1
 
 signal destroyed
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-func damage():
+func damage() -> void:
 	hp -= 1
 	if hp < 1:
 		_destroy()
 			
-func _destroy():
+func _destroy() -> void:
 	destroyed.emit()
 	queue_free()

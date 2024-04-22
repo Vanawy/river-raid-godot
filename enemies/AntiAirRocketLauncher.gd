@@ -2,12 +2,12 @@ extends Node2D
 
 @export var detection_area : Area2D
 
-@onready var rocket_tscn = preload("res://enemies/rocket.tscn")
+@onready var rocket_tscn: PackedScene = preload("res://enemies/rocket.tscn")
 
 func _ready() -> void:
 	detection_area.body_entered.connect(target_detected)
 
-func target_detected(target : Node2D):
+func target_detected(target : Node2D) -> void:
 	if not target is Jet:
 		return
 	print("target detected")
@@ -15,8 +15,8 @@ func target_detected(target : Node2D):
 	print("launch rocket")
 	launch_rocket(target)
 	
-func launch_rocket(target : Jet):
-	var new_rocket = rocket_tscn.instantiate() as EnemyRocket
+func launch_rocket(target : Jet) -> void:
+	var new_rocket: EnemyRocket = rocket_tscn.instantiate()
 	get_tree().get_root().add_child.call_deferred(new_rocket)
 	new_rocket.set_target(target)
 	new_rocket.global_position = global_position

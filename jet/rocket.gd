@@ -1,40 +1,42 @@
 extends Area2D
 class_name Rocket
 
-var speed = 100
+var speed: float = 100
+
+@onready var smoke: GPUParticles2D = $Smoke
+@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var explosion: AnimatedSprite2D = $Explosion
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	var visibility_notifier = $VisibleOnScreenNotifier2D as VisibleOnScreenNotifier2D
+func _ready() -> void:
+	var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 	visibility_notifier.screen_exited.connect(destroy)
 	body_entered.connect(hit)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	move_local_x(speed * delta)
 	
-func destroy():
+func destroy() -> void:
 	speed = 0
-	$Smoke.emitting = false
-	$Rocket.visible = false
-	var explosion = $Explosion as AnimatedSprite2D
+	smoke.emitting = false
+	sprite.visible = false
 	explosion.visible = true
 	explosion.play()
 	await get_tree().create_timer(2).timeout
 	queue_free()
 
-func hit(body : Node2D):
+func hit(body : Node2D) -> void:
 	#if body is Level:
 		#destroy()
 	if body is Enemy:
-		body.damage()
+		var enemy: Enemy = body
+		enemy.damage()
 		
 	if body is EnemyJet:
-		if (body as EnemyJet).is_dead:
+		var enemy: EnemyJet = body
+		if enemy.is_dead:
 			return
-		body.damage()
+		enemy.damage()
 		
 	destroy()

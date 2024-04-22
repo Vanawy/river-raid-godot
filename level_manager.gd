@@ -1,9 +1,10 @@
 extends Node2D
 class_name LevelManager
 
-var level_scene = preload("res://level.tscn")
+var level_scene : PackedScene = preload("res://level.tscn")
 
 @onready var current_level : Level = $Level
+@onready var enemy_spawner : EnemySpawner = $EnemySpawner
 var next_level : Level = null
 
 # Called when the node enters the scene tree for the first time.
@@ -15,12 +16,18 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-func switch_level():
+func switch_level() -> void:
 	current_level = next_level
 	next_level = null
+	enemy_spawner.spawn_jets(
+		current_level, 
+		10
+	)
 
-func generate_next_level():
-	var new_level = level_scene.instantiate() as Level
+	
+
+func generate_next_level()  -> void:
+	var new_level: Level = level_scene.instantiate()
 	new_level.global_position = Vector2(-10000, 0)
 	add_child.call_deferred(new_level)
 	new_level.player_almost_reached_bridge.connect(generate_next_level)

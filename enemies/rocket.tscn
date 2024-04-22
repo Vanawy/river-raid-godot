@@ -5,9 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="3_xcf3w"]
 [ext_resource type="Texture2D" uid="uid://8u3mnaoxx7lr" path="res://explosion_top.png" id="4_pl12o"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kinpr"]
-radius = 2.0
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b3qkp"]
 lifetime_randomness = 0.38
 particle_flag_disable_z = true
@@ -37,6 +34,9 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kinpr"]
+radius = 2.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5pci5"]
 atlas = ExtResource("4_pl12o")
@@ -87,27 +87,29 @@ rotation = 1.57079
 scale = Vector2(1, 4.17398)
 rect = Rect2(-5, 0, 10, 100)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 0)
-rotation = 1.57079
-shape = SubResource("CircleShape2D_kinpr")
-
-[node name="Smoke" type="GPUParticles2D" parent="CollisionShape2D"]
+[node name="Smoke" type="GPUParticles2D" parent="."]
 z_index = -1
-position = Vector2(0, 4)
+position = Vector2(-6, 2.50975e-05)
+rotation = 1.57079
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_b3qkp")
 texture = ExtResource("3_xcf3w")
 visibility_rect = Rect2(-1, 0, 2, 200)
 
-[node name="Rocket" type="AnimatedSprite2D" parent="CollisionShape2D"]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
-position = Vector2(0, -2)
+position = Vector2(0, -1.25488e-05)
+rotation = 1.57079
 sprite_frames = SubResource("SpriteFrames_bj14m")
 autoplay = "default"
 frame_progress = 0.666847
 centered = false
 offset = Vector2(-2, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+rotation = 1.57079
+shape = SubResource("CircleShape2D_kinpr")
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 visible = false

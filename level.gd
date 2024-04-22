@@ -1,23 +1,22 @@
 extends TileMap
 class_name Level
 
-static var count = 0
-var level_id = 0
+static var count: int = 0
+var level_id: int = 0
 
 signal player_almost_reached_bridge
 signal level_created
 
-var cell_size = Vector2(16, 16)
+var cell_size: Vector2 = Vector2(16, 16)
 
 @onready var bot_left: Node2D = $Bot
 @onready var top_right: Node2D = $Top
 @onready var level_end: Node2D = $LevelEnd
 
 @onready var bridge : Enemy = $Bridge/Bridge
-@onready var enemy_spawner : EnemySpawner = $EnemySpawner
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	Level.count += 1
 	level_id = Level.count
 	
@@ -26,19 +25,19 @@ func _ready():
 	generate_level()
 	print("generation - end")
 	
-	($UnloadLevelTrigger as Area2D).body_entered.connect(func (_body):
+	var unload_area: Area2D = $UnloadLevelTrigger
+	unload_area.body_entered.connect(func (_body: Node2D) -> void:
 		print("level " + str(level_id) + " destroyed")
 		queue_free()
 	)
 	
-	($NextLevelLoadTrigger as Area2D).body_entered.connect(func (_body):
+	var next_level_area: Area2D = $NextLevelLoadTrigger
+	next_level_area.body_entered.connect(func (_body: Node2D) -> void:
 		print("player almost reached end")
 		player_almost_reached_bridge.emit()
 	)
 	
 	print("level " + str(level_id) + "created")
-
-	enemy_spawner.spawn_jets(bot_left, top_right, 10)
 
 	level_created.emit()
 	
@@ -49,9 +48,9 @@ func _input(event: InputEvent) -> void:
 		get_tree().reload_current_scene()
 	
 	
-func generate_level():
+func generate_level() -> void:
 	
-	var bot_left_coordinates = local_to_map(bot_left.position)
+	var bot_left_coordinates: Vector2 = local_to_map(bot_left.position)
 	bot_left_coordinates.y -= 1
 	
 	var grid_size : Vector2 = abs((bot_left.position - top_right.position) / cell_size)
@@ -68,45 +67,45 @@ func generate_level():
 		#print(curve(i / 10.0))
 		#print(noise.get_noise_1d(i) * curve(i / 10.0))
 		
-	var image = Image.create(grid_size.x, grid_size.y, false, Image.FORMAT_RGBA8);
+	var image := Image.create(grid_size.x, grid_size.y, false, Image.FORMAT_RGBA8);
 
 	image.fill(Color.BLACK)
 	
-	var curve_color = Color.WHITE
+	var curve_color := Color.WHITE
 	curve_color.a = 0.3
-	var rand_color = Color.RED
+	var rand_color := Color.RED
 	rand_color.a = 0.3
-	var comb_color = Color.GOLD
+	var comb_color := Color.GOLD
 	comb_color.a = 0.3
-	var width_color = Color.BLUE
+	var width_color := Color.BLUE
 	width_color.a = 0.3
 	
-	var tree = get_tree()
+	var tree := get_tree()
 	
 	for y in range(grid_size.y):
 		if tree:
 			await tree.process_frame
 			
 		var yn: float = y / grid_size.y
-		var c = curve(yn)
-		var r = displacement_noise.get_noise_1d(y) / 2
-		var displacement_n = 0.5 + r * c * 0.7
-		var displacement = displacement_n * grid_size.x
+		var c := curve(yn)
+		var r := displacement_noise.get_noise_1d(y) / 2
+		var displacement_n := 0.5 + r * c * 0.7
+		var displacement := displacement_n * grid_size.x
 		
-		var min_width = 2
-		var max_width = 6
-		var width = min_width \
+		var min_width := 2
+		var max_width := 6
+		var width := min_width \
 			+ absf(width_noise.get_noise_1d(y)) * c \
 			* (max_width - min_width)
 							
-		var left_b = displacement - width
-		var right_b = displacement + width
+		var left_b := displacement - width
+		var right_b := displacement + width
 			
 		
 		for x in range(grid_size.x):
 			var xn: float = x / grid_size.x
-			var color = Color.BLACK
-			var place_tile = true
+			var color := Color.BLACK
+			var place_tile := true
 			
 			#if xn < c:
 				#color = color.blend(curve_color)
@@ -129,7 +128,7 @@ func generate_level():
 			if place_tile:
 				set_cell(
 					0, 
-					bot_left_coordinates + Vector2i(x, -y),
+					bot_left_coordinates + Vector2(x, -y),
 					0,
 					Vector2(3, 2),
 					0
@@ -140,7 +139,7 @@ func generate_level():
 	#image.unlock()
 
 	# If it's the first time, or if you want to upload the whole image
-	var texture = ImageTexture.create_from_image(image)
+	var texture := ImageTexture.create_from_image(image)
 	($"../Sprite2D" as Sprite2D).texture = texture
 
 

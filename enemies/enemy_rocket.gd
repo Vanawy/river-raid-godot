@@ -1,25 +1,28 @@
 extends AnimatableBody2D
 class_name EnemyRocket
 
-const MAX_SPEED = 140
+const MAX_SPEED: float = 140
 
-@export var speed = 30
+@export var speed: float = 30
+@export var target: Jet = null
 
-@export var target : Jet = null
+var is_confused: bool = false
+var target_rotation: float = rotation
 
-var is_confused = false
-
-var target_rotation = rotation
+@onready var hitbox: CollisionShape2D = $CollisionShape2D
+@onready var explosion: AnimatedSprite2D = $Explosion
+@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var smoke_emitter: GPUParticles2D = $Smoke
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	var visibility_notifier = $VisibleOnScreenNotifier2D as VisibleOnScreenNotifier2D
+func _ready() -> void:
+	var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D 
 	visibility_notifier.screen_exited.connect(destroy)
 
 func _process(_delta: float) -> void:
 	queue_redraw()
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	if speed == 0:
 		return
 		
@@ -28,7 +31,7 @@ func _physics_process(delta):
 	if (abs(target_rotation - rotation) > 0.1):
 		rotation = lerp(rotation, target_rotation, delta)
 	move_local_x(speed * delta)
-	var col = move_and_collide(Vector2.ZERO) as KinematicCollision2D
+	var col := move_and_collide(Vector2.ZERO)
 	if col and col.get_collider() is Level:
 		destroy()
 	
@@ -38,25 +41,25 @@ func _physics_process(delta):
 		if target.is_dead:
 			confuse()
 	
-func confuse():
+func confuse() -> void:
 	is_confused = true
 	target = null
 	target_rotation += [-PI/2, PI/2].pick_random()
 	
 	
-func destroy():
+func destroy() -> void:
 	speed = 0
-	$CollisionShape2D.set_deferred("disabled", false)
-	$CollisionShape2D/Smoke.emitting = false
-	$CollisionShape2D/Rocket.visible = false
-	var explosion = $Explosion as AnimatedSprite2D
+	hitbox.disabled = false
+	smoke_emitter.emitting = false
+	sprite.visible = false
 	explosion.visible = true
 	explosion.play()
+	
 	await explosion.animation_finished
 	await get_tree().create_timer(2).timeout
 	queue_free()
 	
-func set_target(new_target : Node2D):
+func set_target(new_target : Node2D) -> void:
 	target = new_target
 	
 func _draw() -> void:

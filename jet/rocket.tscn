@@ -103,7 +103,7 @@ z_index = 10
 position = Vector2(-2, 0)
 sprite_frames = SubResource("SpriteFrames_2rdht")
 
-[node name="Rocket" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 z_index = 5
 rotation = 1.57079
 sprite_frames = SubResource("SpriteFrames_bj14m")
