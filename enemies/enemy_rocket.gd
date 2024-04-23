@@ -57,7 +57,7 @@ func destroy() -> void:
 	
 	await explosion.animation_finished
 	await get_tree().create_timer(2).timeout
-	queue_free()
+	queue_free.call_deferred()
 	
 func set_target(new_target : Node2D) -> void:
 	target = new_target

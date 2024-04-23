@@ -93,7 +93,7 @@ func generate_level() -> void:
 		var displacement := displacement_n * grid_size.x
 		
 		var min_width := 2
-		var max_width := 6
+		var max_width := 8
 		var width := min_width \
 			+ absf(width_noise.get_noise_1d(y)) * c \
 			* (max_width - min_width)

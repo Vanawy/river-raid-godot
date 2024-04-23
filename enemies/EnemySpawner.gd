@@ -20,14 +20,14 @@ func spawn_jets(_level: Level, count: int) -> void:
 		var enemy: EnemyJet = enemy_jet_scene.instantiate()
 		enemy.position = pos
 		enemy.rotate(PI)
-		level.add_child(enemy)
+		level.add_child.call_deferred(enemy)
 		
 
 		print("enemy spawned at " + str(enemy.global_position.x) + ", " + str(enemy.global_position.y))
 	
 	enemies_spawned = true
 
-func _draw() -> void:
+func _draw() -> void: 
 	if !enemies_spawned:
 		queue_redraw()
 		return

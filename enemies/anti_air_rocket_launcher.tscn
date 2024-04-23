@@ -1,6 +1,54 @@
-[gd_scene load_steps=2 format=3 uid="uid://nejnlh1fk42n"]
+[gd_scene load_steps=9 format=3 uid="uid://nejnlh1fk42n"]
 
 [ext_resource type="Script" path="res://enemies/AntiAirRocketLauncher.gd" id="1_vvcy7"]
+[ext_resource type="Texture2D" uid="uid://bvp1qd8sy7sc" path="res://enemies/boat/enemy_lock-Sheet.png" id="2_25wcc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3m4s"]
+atlas = ExtResource("2_25wcc")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brmpi"]
+atlas = ExtResource("2_25wcc")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tx54"]
+atlas = ExtResource("2_25wcc")
+region = Rect2(64, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpcnx"]
+atlas = ExtResource("2_25wcc")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vikek"]
+atlas = ExtResource("2_25wcc")
+region = Rect2(128, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4onu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3m4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brmpi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tx54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpcnx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vikek")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="AntiAirRocketLauncher" type="Node2D"]
 script = ExtResource("1_vvcy7")
+
+[node name="lock" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q4onu")
+offset = Vector2(8, 0)
