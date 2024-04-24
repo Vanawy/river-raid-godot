@@ -12,7 +12,7 @@ enum States {
 var H_SPEED: float = 70
 
 var BASE_V_SPEED: float = 70
-var V_SPEED_CHANGE: float = 100
+var V_SPEED_CHANGE: float = 40
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var smoke_emitter : GPUParticles2D = $Smoke

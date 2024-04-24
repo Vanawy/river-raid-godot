@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://byl36k88mr2i1"]
+[gd_scene load_steps=8 format=3 uid="uid://byl36k88mr2i1"]
 
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_6mwdt"]
 [ext_resource type="PackedScene" uid="uid://chvnmx1w7aeo4" path="res://jet/jet.tscn" id="1_x0prs"]
 [ext_resource type="PackedScene" uid="uid://c00tkgqhnwlyi" path="res://level_manager.tscn" id="3_2107l"]
 [ext_resource type="PackedScene" uid="uid://bbby63pyldyiu" path="res://enemies/boat/boat.tscn" id="4_g4jv0"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="6_04mai"]
 [ext_resource type="TileSet" uid="uid://dw3ktkni1qm1w" path="res://tileset.tres" id="6_ofgak"]
+[ext_resource type="Script" path="res://intro.gd" id="6_x73kj"]
 
 [node name="Main" type="Node2D"]
 
@@ -11,17 +14,12 @@
 position = Vector2(160, 252)
 _flares_count = 0
 
-[node name="RemoteCamera" type="RemoteTransform2D" parent="Jet"]
-position = Vector2(0, -59)
-remote_path = NodePath("../../Camera2D")
-update_rotation = false
-update_scale = false
-
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(160, 193)
-limit_left = 0
-limit_right = 320
-limit_bottom = 250
+position = Vector2(160, 136)
+zoom = Vector2(1.55, 1.55)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+script = ExtResource("1_6mwdt")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -44,3 +42,51 @@ layer_0/tile_data = PackedInt32Array(65536, 196608, 2, 131072, 196608, 2, 196608
 
 [node name="Boat" parent="." instance=ExtResource("4_g4jv0")]
 position = Vector2(160, -160)
+
+[node name="IntroController" type="Node2D" parent="." node_paths=PackedStringArray("lvl_manager")]
+script = ExtResource("6_x73kj")
+lvl_manager = NodePath("../Level")
+
+[node name="IntroCamera" type="Node2D" parent="IntroController"]
+position = Vector2(160, 136)
+script = ExtResource("6_04mai")
+priority_override = false
+priority = 200
+zoom = Vector2(1.55, 1.55)
+follow_mode = 0
+frame_preview = true
+pixel_perfect = false
+limit/draw_limits = false
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+limit/limit_node_target = NodePath("")
+limit/smoothed = false
+tween_parameters = null
+tween_on_load = true
+inactive_update_mode = 0
+
+[node name="MainCamera" type="Node2D" parent="."]
+position = Vector2(160, 188)
+script = ExtResource("6_04mai")
+priority_override = false
+priority = 50
+zoom = Vector2(1, 1)
+follow_mode = 2
+follow_target = NodePath("../Jet")
+follow_parameters/target_offset = Vector2(0, -64)
+follow_parameters/damping = true
+follow_parameters/damping_value = 10.0
+frame_preview = true
+pixel_perfect = false
+limit/draw_limits = false
+limit/left = 0
+limit/top = -10000000
+limit/right = 320
+limit/bottom = 10000000
+limit/limit_node_target = NodePath("")
+limit/smoothed = false
+tween_parameters = null
+tween_on_load = true
+inactive_update_mode = 0

@@ -10,6 +10,7 @@ var enemies_spawned: bool = false;
 func spawn_jets(_level: Level, count: int) -> void:
 	level = _level
 	spawn_area = level.top_right.position - level.bot_left.position
+	# spawn_area /= Vector2()
 
 	for i: int  in range(count):
 		var pos := Vector2(
@@ -18,7 +19,7 @@ func spawn_jets(_level: Level, count: int) -> void:
 		)
 
 		var enemy: EnemyJet = enemy_jet_scene.instantiate()
-		enemy.position = pos
+		enemy.position = level.bot_left.position + pos
 		enemy.rotate(PI)
 		level.add_child.call_deferred(enemy)
 		
@@ -31,4 +32,4 @@ func _draw() -> void:
 	if !enemies_spawned:
 		queue_redraw()
 		return
-	draw_rect(Rect2(level.position, spawn_area), Color.GREEN, false, 10.0);
+	draw_rect(Rect2(level.bot_left.position, spawn_area), Color.GREEN, false, 10.0);

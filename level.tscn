@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ch67xec0i6ulx"]
+[gd_scene load_steps=13 format=3 uid="uid://ch67xec0i6ulx"]
 
 [ext_resource type="TileSet" uid="uid://dw3ktkni1qm1w" path="res://tileset.tres" id="1_2lcah"]
 [ext_resource type="Script" path="res://level.gd" id="2_a1swu"]
@@ -6,9 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://nq7wy07f7eff" path="res://p_vehicles.png" id="4_22n7y"]
 [ext_resource type="Texture2D" uid="uid://cngj2e3n1au6w" path="res://spritesheet.png" id="5_ib5mq"]
 [ext_resource type="Script" path="res://enemy.gd" id="6_t8jai"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="7_061df"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_05i8x"]
 size = Vector2(320, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_763ku"]
+size = Vector2(178, 190)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qif6t"]
 particles_animation = true
@@ -65,6 +69,14 @@ debug_color = Color(0.807843, 0.388235, 0.380392, 0.419608)
 position = Vector2(-16, -176)
 script = ExtResource("3_7m2jr")
 
+[node name="SwitchCameraTrigger" type="Area2D" parent="Bridge"]
+position = Vector2(16, 176)
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bridge/SwitchCameraTrigger"]
+shape = SubResource("RectangleShape2D_763ku")
+debug_color = Color(0.397676, 0.604663, 0.220979, 0.42)
+
 [node name="Vehicles2" type="GPUParticles2D" parent="Bridge"]
 z_index = 5
 material = SubResource("CanvasItemMaterial_qif6t")
@@ -94,6 +106,26 @@ texture = ExtResource("5_ib5mq")
 centered = false
 region_enabled = true
 region_rect = Rect2(80, 48, 32, 16)
+
+[node name="PhantomCamera2D" type="Node2D" parent="Bridge"]
+position = Vector2(16, 109)
+script = ExtResource("7_061df")
+priority_override = false
+priority = 0
+zoom = Vector2(1, 1)
+follow_mode = 0
+frame_preview = true
+pixel_perfect = false
+limit/draw_limits = false
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+limit/limit_node_target = NodePath("")
+limit/smoothed = false
+tween_parameters = null
+tween_on_load = true
+inactive_update_mode = 0
 
 [node name="Bridge" type="AnimatableBody2D" parent="Bridge"]
 collision_layer = 3

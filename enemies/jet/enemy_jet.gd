@@ -104,6 +104,7 @@ func create_explosion() -> void:
 
 
 func _draw() -> void:
-	var size: float = 1000
-	draw_line(Vector2(-size, 0), Vector2(size, 0), Color.RED, 2);
-	draw_line(Vector2(0, -size), Vector2(0, size), Color.RED, 2);
+	# var size: float = 1000
+	# draw_line(Vector2(-size, 0), Vector2(size, 0), Color.RED, 2);
+	# draw_line(Vector2(0, -size), Vector2(0, size), Color.RED, 2);
+	pass

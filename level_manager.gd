@@ -10,6 +10,11 @@ var next_level : Level = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_level.player_almost_reached_bridge.connect(generate_next_level)
+	enemy_spawner.spawn_jets(
+		current_level, 
+		32
+	)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,7 +26,7 @@ func switch_level() -> void:
 	next_level = null
 	enemy_spawner.spawn_jets(
 		current_level, 
-		10
+		32
 	)
 
 	

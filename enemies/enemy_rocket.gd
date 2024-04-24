@@ -59,11 +59,11 @@ func destroy() -> void:
 	await get_tree().create_timer(2).timeout
 	queue_free.call_deferred()
 	
-func set_target(new_target : Node2D) -> void:
+func set_target(new_target : Jet) -> void:
 	target = new_target
 	
 func _draw() -> void:
-	if !target:
+	if !target || speed == 0:
 		return
 	draw_line(to_local(global_position), to_local(target.global_position), Color.RED)
 	draw_circle(to_local(target.global_position), 8, Color.RED)

@@ -1,11 +1,8 @@
 extends Node2D
 
 @export var detection_area : Area2D
-
 @onready var rocket_tscn: PackedScene = preload("res://enemies/rocket.tscn")
-
 @onready var lock: AnimatedSprite2D = $lock
-
 @onready var current_target: Node2D = null;
 
 func _ready() -> void:
