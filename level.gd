@@ -57,17 +57,17 @@ func generate_level() -> void:
 		
 	var displacement_noise : FastNoiseLite = FastNoiseLite.new()
 	#displacement_noise.seed = 1231 + Level.count
-	displacement_noise.seed = Time.get_unix_time_from_system() + Level.count
+	displacement_noise.seed = int(Time.get_unix_time_from_system()) + Level.count
 	
 	var width_noise : FastNoiseLite = FastNoiseLite.new()
-	#width_noise.seed = 4365 + Level.count
-	width_noise.seed = Time.get_unix_time_from_system() + 1090 + Level.count
+	#width_noise.seed = 4365 + Level.countjet
+	width_noise.seed = int(Time.get_unix_time_from_system()) + 1090 + Level.count
 	
 	#for i in range(0, 11):
 		#print(curve(i / 10.0))
 		#print(noise.get_noise_1d(i) * curve(i / 10.0))
 		
-	var image := Image.create(grid_size.x, grid_size.y, false, Image.FORMAT_RGBA8);
+	var image := Image.create(int(grid_size.x), int(grid_size.y), false, Image.FORMAT_RGBA8);
 
 	image.fill(Color.BLACK)
 	

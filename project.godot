@@ -85,6 +85,7 @@ player_fire={
 2d_physics/layer_4="Enemy Rocket"
 2d_physics/layer_9="Player"
 2d_physics/layer_10="Player Rocket"
+2d_physics/layer_11="CargoPlane"
 
 [rendering]
 

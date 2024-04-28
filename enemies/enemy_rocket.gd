@@ -49,7 +49,7 @@ func confuse() -> void:
 	
 func destroy() -> void:
 	speed = 0
-	hitbox.disabled = false
+	hitbox.set_deferred('disabled', false)
 	smoke_emitter.emitting = false
 	sprite.visible = false
 	explosion.visible = true
