@@ -6,6 +6,7 @@ var speed: float = 100
 @onready var smoke: GPUParticles2D = $Smoke
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var explosion: AnimatedSprite2D = $Explosion
+@onready var collider: CollisionShape2D = $CollisionShape2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,6 +19,7 @@ func _physics_process(delta: float) -> void:
 	move_local_x(speed * delta)
 	
 func destroy() -> void:
+
 	speed = 0
 	smoke.emitting = false
 	sprite.visible = false
@@ -27,6 +29,7 @@ func destroy() -> void:
 	queue_free()
 
 func hit(body : Node2D) -> void:
+	collider.queue_free()
 	#if body is Level:
 		#destroy()
 	if body is Enemy:

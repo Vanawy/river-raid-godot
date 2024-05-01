@@ -1,0 +1,19 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://ehbqo8sjxjfc"]
+
+[ext_resource type="Texture2D" uid="uid://dfg5qxpyt43a6" path="res://cargo_plane/normals.png" id="1_2107p"]
+[ext_resource type="Texture2D" uid="uid://bxtambrjvs85a" path="res://cargo_plane/points.png" id="2_lk0e5"]
+
+[resource]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 5
+emission_point_texture = ExtResource("2_lk0e5")
+emission_normal_texture = ExtResource("1_2107p")
+emission_point_count = 12
+direction = Vector3(0, 1, 0)
+spread = 12.414
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 98, 0)
+sub_emitter_mode = 1
+sub_emitter_frequency = 100.0

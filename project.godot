@@ -14,7 +14,7 @@ config/name="03_river_raid"
 config/tags=PackedStringArray("20_games_challange")
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [debug]
 
@@ -86,6 +86,10 @@ player_fire={
 2d_physics/layer_9="Player"
 2d_physics/layer_10="Player Rocket"
 2d_physics/layer_11="CargoPlane"
+
+[phantom_camera]
+
+updater/enable_updater=false
 
 [rendering]
 

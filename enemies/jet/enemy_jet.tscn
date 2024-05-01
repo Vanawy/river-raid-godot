@@ -18,14 +18,15 @@ direction = Vector3(0, 1, 0)
 gravity = Vector3(0, 10, 0)
 
 [node name="EnemyJet" type="AnimatableBody2D"]
-z_index = 100
+z_index = 20
 collision_layer = 2
 collision_mask = 512
 script = ExtResource("1_fs50c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_rvbno")
-frame = 2
+animation = &"explosion"
+autoplay = "default"
 
 [node name="RocketsCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)

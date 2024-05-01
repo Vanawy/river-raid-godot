@@ -1,0 +1,175 @@
+[gd_scene load_steps=16 format=3 uid="uid://cd7rn3l1myk6s"]
+
+[ext_resource type="Script" path="res://cargo_plane/CargoPlane.gd" id="1_mm4dx"]
+[ext_resource type="Texture2D" uid="uid://cngj2e3n1au6w" path="res://spritesheet.png" id="2_xbdcy"]
+[ext_resource type="Texture2D" uid="uid://cdomo6jofnj5n" path="res://cargo_plane/refuel-area.png" id="3_xn2g1"]
+[ext_resource type="Material" uid="uid://b5dj7nhfpalhs" path="res://cargo_plane/big_smoke.tres" id="4_snhvn"]
+[ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="5_l0sbx"]
+[ext_resource type="Material" uid="uid://ehbqo8sjxjfc" path="res://cargo_plane/directional_flares_constant.tres" id="6_xwgn6"]
+[ext_resource type="Texture2D" uid="uid://bxl32a122p23a" path="res://flare.png" id="7_6g04x"]
+[ext_resource type="Texture2D" uid="uid://cte82o442osiw" path="res://flare-trail.png" id="8_llogr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsh55"]
+size = Vector2(32, 32)
+
+[sub_resource type="Animation" id="Animation_vwex1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.0253638, 0.0253638, 0.0253638, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2rw3p"]
+resource_name = "blink"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0235294, 0.0235294, 0.0235294, 0.768627), Color(0.0235294, 0.0235294, 0.0235294, 0.25098)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gao8v"]
+_data = {
+"RESET": SubResource("Animation_vwex1"),
+"blink": SubResource("Animation_2rw3p")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdhvs"]
+size = Vector2(38, 15)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5s80t"]
+radius = 4.0
+height = 60.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i62x6"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+color = Color(0.839216, 0.839216, 0.839216, 1)
+
+[node name="CargoPlane" type="AnimatableBody2D"]
+z_index = 200
+collision_layer = 1024
+collision_mask = 0
+sync_to_physics = false
+script = ExtResource("1_mm4dx")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_xbdcy")
+region_enabled = true
+region_rect = Rect2(80, 64, 48, 64)
+
+[node name="Refuel" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Refuel"]
+position = Vector2(0, 48)
+shape = SubResource("RectangleShape2D_rsh55")
+
+[node name="RefuelAreaSprite" type="Sprite2D" parent="Refuel"]
+self_modulate = Color(0.0253638, 0.0253638, 0.0253638, 1)
+z_index = 40
+z_as_relative = false
+position = Vector2(0, 48)
+texture = ExtResource("3_xn2g1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Refuel/RefuelAreaSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_gao8v")
+}
+autoplay = "blink"
+
+[node name="RefuelAreaSpriteActive" type="Sprite2D" parent="Refuel"]
+modulate = Color(0.0107195, 0.66725, 1.92523e-07, 1)
+z_index = 40
+z_as_relative = false
+position = Vector2(0, 48)
+texture = ExtResource("3_xn2g1")
+
+[node name="WingsHitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_mdhvs")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_5s80t")
+
+[node name="Particles" type="Node2D" parent="."]
+
+[node name="Smokes" type="Node2D" parent="Particles"]
+
+[node name="Smoke" type="GPUParticles2D" parent="Particles/Smokes"]
+z_index = -1
+position = Vector2(-16, 11)
+amount = 100
+process_material = ExtResource("4_snhvn")
+texture = ExtResource("5_l0sbx")
+lifetime = 0.3
+visibility_rect = Rect2(-5, 0, 10, 50)
+
+[node name="Smoke2" type="GPUParticles2D" parent="Particles/Smokes"]
+z_index = -1
+position = Vector2(-9, 7)
+amount = 100
+process_material = ExtResource("4_snhvn")
+texture = ExtResource("5_l0sbx")
+lifetime = 0.3
+visibility_rect = Rect2(-5, 0, 10, 50)
+
+[node name="Smoke3" type="GPUParticles2D" parent="Particles/Smokes"]
+z_index = -1
+position = Vector2(9, 7)
+amount = 100
+process_material = ExtResource("4_snhvn")
+texture = ExtResource("5_l0sbx")
+lifetime = 0.3
+visibility_rect = Rect2(-5, 0, 10, 50)
+
+[node name="Smoke4" type="GPUParticles2D" parent="Particles/Smokes"]
+z_index = -1
+position = Vector2(16, 11)
+amount = 100
+process_material = ExtResource("4_snhvn")
+texture = ExtResource("5_l0sbx")
+lifetime = 0.3
+visibility_rect = Rect2(-5, 0, 10, 50)
+
+[node name="Flares" type="Node2D" parent="Particles"]
+z_index = 20
+z_as_relative = false
+
+[node name="FlaresRear" type="GPUParticles2D" parent="Particles/Flares"]
+z_index = -5
+position = Vector2(0, 11)
+amount = 64
+sub_emitter = NodePath("FlaresTrails")
+process_material = ExtResource("6_xwgn6")
+texture = ExtResource("7_6g04x")
+lifetime = 3.0
+explosiveness = 0.8
+
+[node name="FlaresTrails" type="GPUParticles2D" parent="Particles/Flares/FlaresRear"]
+z_index = -7
+position = Vector2(0, -4)
+emitting = false
+amount = 512
+process_material = SubResource("ParticleProcessMaterial_i62x6")
+texture = ExtResource("8_llogr")
+lifetime = 0.4

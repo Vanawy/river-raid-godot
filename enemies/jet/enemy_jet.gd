@@ -2,8 +2,11 @@ extends AnimatableBody2D
 class_name EnemyJet
 
 
+var H_SPEED: float = 70
 var BASE_V_SPEED: float = 70
 var V_SPEED_CHANGE: float = 32
+
+var move_direction: float = 0;
 
 
 enum States {
@@ -21,6 +24,8 @@ var hp: int = 1
 @onready var smoke_emitter : GPUParticles2D = $Smoke
 # @onready var flares : GPUParticles2D = $Flares
 
+@onready var rockets_collider: CollisionShape2D = $RocketsCollision
+
 
 var velocity: Vector2 = Vector2.ZERO
 
@@ -31,6 +36,7 @@ var is_dead: bool = false
 func _ready() -> void: 
 	var hitbox : Area2D = $Hitbox
 	hitbox.body_entered.connect(on_collision)
+	sprite.play("default")
 	# var countermeasures_area : Area2D = $CounterMeasuresArea
 	# countermeasures_area.body_entered.connect(func(body: Node2D):
 	# 	if body is EnemyRocket:
@@ -43,11 +49,9 @@ func on_collision(body : Node2D) -> void:
 		var jet: Jet = body
 		jet.death()
 
-func _process(_delta: float) -> void:
-	if is_dead:
-		return 
-		
-	update_state()
+func _process(_delta: float) -> void:		
+	if !is_dead:
+		update_state()
 
 func update_state() -> void:
 	var hspeed: float = abs(velocity.x)
@@ -60,12 +64,13 @@ func update_state() -> void:
 	sprite.frame = state
 
 func _physics_process(delta: float) -> void:
-	if is_dead:
-		return
 		
 	var z: float  = 0
 	
-	velocity.y = lerpf(velocity.y, -BASE_V_SPEED + z * V_SPEED_CHANGE, delta * 5)
+	if !is_dead:
+		velocity.x = lerpf(velocity.x, H_SPEED * move_direction, delta * 3)
+		velocity.y = lerpf(velocity.y, -BASE_V_SPEED + z * V_SPEED_CHANGE, delta * 5)
+
 	smoke_emitter.amount_ratio = 1 + z * 0.3
 	
 	position += transform.basis_xform(velocity * delta)
@@ -80,27 +85,22 @@ func damage() -> void:
 	
 func death() -> void:
 	is_dead = true
-	velocity = Vector2.ZERO
-	create_explosion()
+	# velocity = Vector2.ZERO
 	smoke_emitter.emitting = false
-	sprite.play("explosion")
 	var hitbox: Area2D = $Hitbox
 	hitbox.body_entered.disconnect(on_collision)
+	rockets_collider.queue_free()
 
-# func launch_flares(rocket: Node2D):
-# 	if rocket.is_confused:
-# 		return
-# 	if _flares_count < 1:
-# 		print("no flares left")
-# 		return
-# 	flares.restart()
-# 	_flares_count -= 1
-# 	await get_tree().create_timer(0.1).timeout
-# 	if (is_instance_valid(rocket)):
-# 		rocket.confuse()
+	sprite.modulate = Color.hex(0x292929ff)
+	var tween: Tween = create_tween()
+	await tween.tween_property(sprite, "scale", Vector2(0.5, 0.5), 0.3).set_trans(Tween.TRANS_LINEAR).finished
+	sprite.scale = Vector2(1, 1)
+	sprite.modulate = Color.WHITE
+	velocity = Vector2.ZERO
+	sprite.play("explosion")
+	await sprite.animation_finished
+	queue_free()
 
-func create_explosion() -> void:
-	pass
 
 
 func _draw() -> void:

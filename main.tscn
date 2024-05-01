@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://byl36k88mr2i1"]
+[gd_scene load_steps=9 format=3 uid="uid://byl36k88mr2i1"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_6mwdt"]
 [ext_resource type="PackedScene" uid="uid://chvnmx1w7aeo4" path="res://jet/jet.tscn" id="1_x0prs"]
@@ -7,20 +7,7 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="6_04mai"]
 [ext_resource type="TileSet" uid="uid://dw3ktkni1qm1w" path="res://tileset.tres" id="6_ofgak"]
 [ext_resource type="Script" path="res://intro.gd" id="6_x73kj"]
-[ext_resource type="Texture2D" uid="uid://cngj2e3n1au6w" path="res://spritesheet.png" id="8_vapsc"]
-[ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="9_hudyh"]
-[ext_resource type="Script" path="res://cargo_plane/CargoPlane.gd" id="9_msf6n"]
-[ext_resource type="Material" uid="uid://b5dj7nhfpalhs" path="res://cargo_plane/big_smoke.tres" id="10_h6okg"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rsh55"]
-size = Vector2(32, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mdhvs"]
-size = Vector2(38, 15)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5s80t"]
-radius = 4.0
-height = 60.0
+[ext_resource type="PackedScene" uid="uid://cm4eswitbf2k2" path="res://enemies/jet/enemy_jet.tscn" id="8_huvhi"]
 
 [node name="Main" type="Node2D"]
 
@@ -62,6 +49,7 @@ script = ExtResource("6_x73kj")
 lvl_manager = NodePath("../Level")
 
 [node name="IntroCamera" type="Node2D" parent="IntroController"]
+editor_description = "Camera used on game start"
 position = Vector2(160, 136)
 script = ExtResource("6_04mai")
 priority_override = false
@@ -105,65 +93,6 @@ tween_parameters = null
 tween_on_load = true
 inactive_update_mode = 0
 
-[node name="CargoPlane" type="AnimatableBody2D" parent="."]
-z_index = 200
-position = Vector2(208, 251)
-collision_layer = 1024
-collision_mask = 0
-sync_to_physics = false
-script = ExtResource("9_msf6n")
-
-[node name="Sprite" type="Sprite2D" parent="CargoPlane"]
-texture = ExtResource("8_vapsc")
-region_enabled = true
-region_rect = Rect2(80, 64, 48, 64)
-
-[node name="Refuel" type="Area2D" parent="CargoPlane"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CargoPlane/Refuel"]
-position = Vector2(0, 48)
-shape = SubResource("RectangleShape2D_rsh55")
-
-[node name="Smoke" type="GPUParticles2D" parent="CargoPlane"]
-z_index = -1
-position = Vector2(-16, 9)
-amount = 100
-process_material = ExtResource("10_h6okg")
-texture = ExtResource("9_hudyh")
-lifetime = 0.3
-visibility_rect = Rect2(-5, 0, 10, 50)
-
-[node name="Smoke2" type="GPUParticles2D" parent="CargoPlane"]
-z_index = -1
-position = Vector2(-9, 5)
-amount = 100
-process_material = ExtResource("10_h6okg")
-texture = ExtResource("9_hudyh")
-lifetime = 0.3
-visibility_rect = Rect2(-5, 0, 10, 50)
-
-[node name="Smoke3" type="GPUParticles2D" parent="CargoPlane"]
-z_index = -1
-position = Vector2(9, 5)
-amount = 100
-process_material = ExtResource("10_h6okg")
-texture = ExtResource("9_hudyh")
-lifetime = 0.3
-visibility_rect = Rect2(-5, 0, 10, 50)
-
-[node name="Smoke4" type="GPUParticles2D" parent="CargoPlane"]
-z_index = -1
-position = Vector2(16, 9)
-amount = 100
-process_material = ExtResource("10_h6okg")
-texture = ExtResource("9_hudyh")
-lifetime = 0.3
-visibility_rect = Rect2(-5, 0, 10, 50)
-
-[node name="WingsHitbox" type="CollisionShape2D" parent="CargoPlane"]
-position = Vector2(0, 4)
-shape = SubResource("RectangleShape2D_mdhvs")
-
-[node name="Hitbox" type="CollisionShape2D" parent="CargoPlane"]
-position = Vector2(0, -1)
-shape = SubResource("CapsuleShape2D_5s80t")
+[node name="EnemyJet3" parent="." instance=ExtResource("8_huvhi")]
+position = Vector2(159, -58)
+rotation = -3.14159

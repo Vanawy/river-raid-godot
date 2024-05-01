@@ -51,7 +51,8 @@ script = ExtResource("1_tmj2b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_6il8l")
-frame = 2
+animation = &"explosion"
+autoplay = "default"
 
 [node name="Smoke" type="GPUParticles2D" parent="."]
 z_index = -1
@@ -66,15 +67,16 @@ z_index = -5
 position = Vector2(0, 4)
 emitting = false
 amount = 32
-sub_emitter = NodePath("../FlaresTrails")
+sub_emitter = NodePath("FlaresTrails")
 process_material = SubResource("ParticleProcessMaterial_6q6oa")
 texture = ExtResource("4_nfkh3")
 lifetime = 5.0
 one_shot = true
 explosiveness = 0.95
 
-[node name="FlaresTrails" type="GPUParticles2D" parent="."]
+[node name="FlaresTrails" type="GPUParticles2D" parent="Flares"]
 z_index = -7
+position = Vector2(0, -4)
 emitting = false
 amount = 300
 process_material = SubResource("ParticleProcessMaterial_p308w")

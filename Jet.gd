@@ -47,6 +47,8 @@ func on_collision(body : Node2D) -> void:
 	if body is Level:
 		death()
 	if body is Enemy:
+		var enemy: Enemy = body
+		enemy.damage()
 		death()
 
 func _process(_delta: float) -> void:
@@ -76,13 +78,15 @@ func update_state() -> void:
 	sprite.frame = state
 
 func _physics_process(delta: float) -> void:
-	if is_dead:
-		return
+
+	var move := Vector2.ZERO
+	if !is_dead:
+		move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		velocity.x = lerpf(velocity.x, H_SPEED * move.x, delta * 3)
+		velocity.y = lerpf(velocity.y, -BASE_V_SPEED + move.y * V_SPEED_CHANGE, delta * 5)
+	else:
+		velocity.y = lerpf(velocity.y, 0, delta)
 	
-	var move: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	
-	velocity.x = lerpf(velocity.x, H_SPEED * move.x, delta * 3)
-	velocity.y = lerpf(velocity.y, -BASE_V_SPEED + move.y * V_SPEED_CHANGE, delta * 5)
 	smoke_emitter.amount_ratio = 1 + move.y * 0.3
 	
 	position += velocity * delta
@@ -90,9 +94,18 @@ func _physics_process(delta: float) -> void:
 	
 func death() -> void:
 	is_dead = true
+	# velocity = Vector2.ZERO
+	# create_explosion()
+
+	sprite.self_modulate = Color.hex(0x292929ff)
+	var tween: Tween = create_tween()
+	await tween.tween_property(sprite, "scale", Vector2(0.5, 0.5), 0.6).set_trans(Tween.TRANS_LINEAR).finished
+	sprite.scale = Vector2(1, 1)
+	sprite.self_modulate = Color.WHITE
 	velocity = Vector2.ZERO
-	create_explosion()
+	sprite.play("explosion")
 	smoke_emitter.emitting = false
+	await sprite.animation_finished
 	sprite.visible = false
 
 @onready var explosion_scenes: Array[PackedScene] = [
@@ -121,3 +134,6 @@ func create_explosion() -> void:
 		n = 1
 	var explosion: Node2D = explosion_scenes[n].instantiate()
 	add_child.call_deferred(explosion)
+
+func refuel(amount: float) -> void:
+	pass
