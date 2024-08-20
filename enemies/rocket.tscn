@@ -110,6 +110,7 @@ offset = Vector2(-2, 0)
 position = Vector2(-2, 0)
 rotation = 1.57079
 shape = SubResource("CircleShape2D_kinpr")
+debug_color = Color(0.790878, 0.370387, 0.567449, 0.42)
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 visible = false

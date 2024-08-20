@@ -26,6 +26,8 @@ var state : States = States.FORWARD
 
 var is_dead: bool = false
 
+var input_horizontal: float = 0
+
 @export var _flares_count: int = 3
 
 func _ready() -> void: 
@@ -44,7 +46,7 @@ func on_collision(body : Node2D) -> void:
 		if not enemy_rocket.is_confused:
 			death()
 			enemy_rocket.destroy()
-	if body is Level:
+	if body.is_in_group("LEVEL"):
 		death()
 	if body is Enemy:
 		var enemy: Enemy = body
@@ -68,7 +70,7 @@ func fire() -> void:
 	
 func update_state() -> void:
 	var hspeed: float = abs(velocity.x)
-	if hspeed > 24:
+	if hspeed > 24 or (hspeed > 12 and abs(input_horizontal) > 0):
 		state = States.FULL_LEFT if velocity.x < 0 else States.FULL_RIGHT 
 	elif hspeed > 2:
 		state = States.LEFT if velocity.x < 0 else States.RIGHT 
@@ -82,6 +84,7 @@ func _physics_process(delta: float) -> void:
 	var move := Vector2.ZERO
 	if !is_dead:
 		move = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		input_horizontal = move.x
 		velocity.x = lerpf(velocity.x, H_SPEED * move.x, delta * 3)
 		velocity.y = lerpf(velocity.y, -BASE_V_SPEED + move.y * V_SPEED_CHANGE, delta * 5)
 	else:
@@ -93,10 +96,14 @@ func _physics_process(delta: float) -> void:
 	
 	
 func death() -> void:
+	if is_dead:
+		return
 	is_dead = true
+	
+	$Hitbox/CollisionShape2D.set_deferred("disabled", true)
+	$CollisionShape2D.set_deferred("disabled", true)
 	# velocity = Vector2.ZERO
 	# create_explosion()
-
 	sprite.self_modulate = Color.hex(0x292929ff)
 	var tween: Tween = create_tween()
 	await tween.tween_property(sprite, "scale", Vector2(0.5, 0.5), 0.6).set_trans(Tween.TRANS_LINEAR).finished

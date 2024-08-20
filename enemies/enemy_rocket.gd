@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		rotation = lerp(rotation, target_rotation, delta)
 	move_local_x(speed * delta)
 	var col := move_and_collide(Vector2.ZERO)
-	if col and col.get_collider() is Level:
+	if col and col.get_collider().is_in_group("LEVEL"):
 		destroy()
 	
 	if target and not is_confused:
@@ -49,7 +49,7 @@ func confuse() -> void:
 	
 func destroy() -> void:
 	speed = 0
-	hitbox.set_deferred('disabled', false)
+	hitbox.set_deferred('disabled', true)
 	smoke_emitter.emitting = false
 	sprite.visible = false
 	explosion.visible = true

@@ -8,6 +8,8 @@ var V_SPEED_CHANGE: float = 32
 
 var move_direction: float = 0;
 
+var time: float = 0;
+
 
 enum States {
 	FULL_LEFT,
@@ -16,6 +18,7 @@ enum States {
 	RIGHT,
 	FULL_RIGHT,
 }
+
 var state : States = States.FORWARD
 
 var hp: int = 1
@@ -37,6 +40,8 @@ func _ready() -> void:
 	var hitbox : Area2D = $Hitbox
 	hitbox.body_entered.connect(on_collision)
 	sprite.play("default")
+	
+	time += randf() * 10
 	# var countermeasures_area : Area2D = $CounterMeasuresArea
 	# countermeasures_area.body_entered.connect(func(body: Node2D):
 	# 	if body is EnemyRocket:
@@ -48,8 +53,14 @@ func on_collision(body : Node2D) -> void:
 		death()
 		var jet: Jet = body
 		jet.death()
+	if body is EnemyRocket:
+		print_rich("[color=red][b]HIT[/b][/color]")
+		death()
+		var rocket: EnemyRocket = body
+		rocket.destroy()
 
-func _process(_delta: float) -> void:		
+func _process(delta: float) -> void:
+	time += delta
 	if !is_dead:
 		update_state()
 
@@ -67,8 +78,11 @@ func _physics_process(delta: float) -> void:
 		
 	var z: float  = 0
 	
+	H_SPEED = sin(time / 2) * 3
+	#print(H_SPEED)
+	
 	if !is_dead:
-		velocity.x = lerpf(velocity.x, H_SPEED * move_direction, delta * 3)
+		velocity.x = lerpf(velocity.x, H_SPEED, delta * 3)
 		velocity.y = lerpf(velocity.y, -BASE_V_SPEED + z * V_SPEED_CHANGE, delta * 5)
 
 	smoke_emitter.amount_ratio = 1 + z * 0.3
@@ -104,7 +118,7 @@ func death() -> void:
 
 
 func _draw() -> void:
-	# var size: float = 1000
-	# draw_line(Vector2(-size, 0), Vector2(size, 0), Color.RED, 2);
-	# draw_line(Vector2(0, -size), Vector2(0, size), Color.RED, 2);
+	var size: float = 10000
+	draw_line(Vector2(-size, 0), Vector2(size, 0), Color.RED, 2);
+	draw_line(Vector2(0, -size), Vector2(0, size), Color.RED, 2);
 	pass

@@ -51,8 +51,8 @@ script = ExtResource("1_tmj2b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_6il8l")
-animation = &"explosion"
 autoplay = "default"
+frame = 2
 
 [node name="Smoke" type="GPUParticles2D" parent="."]
 z_index = -1

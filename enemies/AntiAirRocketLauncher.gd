@@ -19,6 +19,9 @@ func target_detected(target : Node2D) -> void:
 	await lock.animation_finished
 	print("launch rocket")
 	launch_rocket(target)
+	while true:
+		await get_tree().create_timer(0.5).timeout
+		launch_rocket(target)
 	lock.visible = false
 	
 func launch_rocket(target : Jet) -> void:

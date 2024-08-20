@@ -1,4 +1,4 @@
-extends TileMap
+extends Node2D
 class_name Level
 
 static var count: int = 0
@@ -6,13 +6,15 @@ var level_id: int = 0
 
 signal player_almost_reached_bridge
 signal level_created
+signal player_entered_level
 
 var cell_size: Vector2 = Vector2(16, 16)
+
+@onready var tilemap_layer: TileMapLayer = $Layer0
 
 @onready var bot_left: Node2D = $Bot
 @onready var top_right: Node2D = $Top
 @onready var level_end: Node2D = $LevelEnd
-
 @onready var bridge : Enemy = $Bridge/Bridge
 
 # Called when the node enters the scene tree for the first time.
@@ -31,9 +33,15 @@ func _ready() -> void:
 		queue_free()
 	)
 	
-	var next_level_area: Area2D = $NextLevelLoadTrigger
-	next_level_area.body_entered.connect(func (_body: Node2D) -> void:
-		print("player almost reached end")
+	var level_enter_area: Area2D = $LevelEndCloseTrigger
+	level_enter_area.body_entered.connect(func (_body: Node2D) -> void:
+		print("player entered level")
+		player_entered_level.emit()
+	)
+	
+	var level_end_area: Area2D = $LevelEndCloseTrigger
+	level_end_area.body_entered.connect(func (_body: Node2D) -> void:
+		print("player almost reached level end")
 		player_almost_reached_bridge.emit()
 	)
 	
@@ -42,15 +50,11 @@ func _ready() -> void:
 	level_created.emit()
 	
 	
-
-func _input(event: InputEvent) -> void:
-	if event.as_text() == "F2":
-		get_tree().reload_current_scene()
 	
 	
 func generate_level() -> void:
 	
-	var bot_left_coordinates: Vector2 = local_to_map(bot_left.position)
+	var bot_left_coordinates: Vector2 = tilemap_layer.local_to_map(bot_left.position)
 	bot_left_coordinates.y -= 1
 	
 	var grid_size : Vector2 = abs((bot_left.position - top_right.position) / cell_size)
@@ -126,15 +130,14 @@ func generate_level() -> void:
 			image.set_pixel(x, y, color)
 			
 			if place_tile:
-				set_cell(
-					0, 
+				tilemap_layer.set_cell(
 					bot_left_coordinates + Vector2(x, -y),
 					0,
 					Vector2(3, 2),
 					0
 				)
 				
-	update_internals()
+	tilemap_layer.update_internals()
 
 	#image.unlock()
 
