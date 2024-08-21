@@ -49,7 +49,26 @@ func _ready() -> void:
 
 	level_created.emit()
 	
+func get_closest_spawn_horizontal(global_pos: Vector2, width: int = 1) -> Vector2:
+	var bot_left_coordinates: Vector2 = tilemap_layer.local_to_map(bot_left.position)
+	bot_left_coordinates.y -= 1
+	var grid_size : Vector2 = abs((bot_left.position - top_right.position) / cell_size)
 	
+	var x_start := bot_left_coordinates.x
+	
+	var pos := tilemap_layer.to_local(global_pos)
+	var local := tilemap_layer.local_to_map(pos)
+	assert(local.x >= x_start || local.x < x_start + grid_size.x)
+	
+	var n: int = 0
+	for x in range(grid_size.x):
+		var map_pos := Vector2i(x_start + x, local.y)
+		if !tilemap_layer.get_cell_tile_data(map_pos):
+			n += 1
+		if n >= width:
+			return tilemap_layer.map_to_local(map_pos)
+	
+	return Vector2.ZERO
 	
 	
 func generate_level() -> void:

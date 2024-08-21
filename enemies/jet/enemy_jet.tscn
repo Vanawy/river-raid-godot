@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cm4eswitbf2k2"]
+[gd_scene load_steps=8 format=3 uid="uid://cm4eswitbf2k2"]
 
 [ext_resource type="Script" path="res://enemies/jet/enemy_jet.gd" id="1_fs50c"]
-[ext_resource type="SpriteFrames" uid="uid://bqrdibuur6krd" path="res://enemies/jet/enemy_jet.tres" id="2_rvbno"]
-[ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="3_gpgip"]
+[ext_resource type="SpriteFrames" uid="uid://bqrdibuur6krd" path="res://enemies/jet/enemy_jet_smoke.tres" id="2_rvbno"]
+[ext_resource type="Material" uid="uid://luwq0b8jh33i" path="res://jet/jet_smoke.tres" id="3_ygrq5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f42g8"]
 radius = 7.0
@@ -10,12 +10,13 @@ radius = 7.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_302lu"]
 radius = 5.0
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0m5p4"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(1, 0.3, 0)
-direction = Vector3(0, 1, 0)
-gravity = Vector3(0, 10, 0)
+[sub_resource type="Gradient" id="Gradient_rrmu4"]
+offsets = PackedFloat32Array(0.967532, 1)
+colors = PackedColorArray(0.703808, 0.703808, 0.703808, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cjf08"]
+gradient = SubResource("Gradient_rrmu4")
+width = 1
 
 [node name="EnemyJet" type="AnimatableBody2D"]
 z_index = 20
@@ -44,6 +45,6 @@ debug_color = Color(0.964706, 0, 0.494118, 0.419608)
 z_index = -1
 position = Vector2(0, 7)
 amount = 400
-process_material = SubResource("ParticleProcessMaterial_0m5p4")
-texture = ExtResource("3_gpgip")
+process_material = ExtResource("3_ygrq5")
+texture = SubResource("GradientTexture1D_cjf08")
 visibility_rect = Rect2(-5, -100, 10, 200)

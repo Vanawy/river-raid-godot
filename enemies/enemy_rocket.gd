@@ -65,7 +65,7 @@ func set_target(new_target : Jet) -> void:
 func _draw() -> void:
 	if !target || speed == 0:
 		return
-	draw_line(to_local(global_position), to_local(target.global_position), Color.RED)
-	draw_circle(to_local(target.global_position), 8, Color.RED)
-	
-	draw_line(Vector2(0, 0), Vector2(1000, 0).rotated(target_rotation - rotation), Color.REBECCA_PURPLE, 1)
+	#draw_line(to_local(global_position), to_local(target.global_position), Color.RED)
+	#draw_circle(to_local(target.global_position), 8, Color.RED)
+	#
+	#draw_line(Vector2(0, 0), Vector2(1000, 0).rotated(target_rotation - rotation), Color.REBECCA_PURPLE, 1)

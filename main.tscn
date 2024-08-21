@@ -8,9 +8,8 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="6_04mai"]
 [ext_resource type="TileSet" uid="uid://dw3ktkni1qm1w" path="res://tileset.tres" id="6_ofgak"]
 [ext_resource type="Script" path="res://intro.gd" id="6_x73kj"]
-[ext_resource type="PackedScene" uid="uid://cm4eswitbf2k2" path="res://enemies/jet/enemy_jet.tscn" id="8_huvhi"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_7g7e2"]
-[ext_resource type="PackedScene" uid="uid://bmd1msckqvf8s" path="res://enemies/rocket.tscn" id="10_5ekyv"]
+[ext_resource type="Script" path="res://free_cam_controller.gd" id="10_msv50"]
 
 [sub_resource type="Resource" id="Resource_v4ldd"]
 script = ExtResource("9_7g7e2")
@@ -19,6 +18,12 @@ transition = 0
 ease = 2
 
 [sub_resource type="Resource" id="Resource_lu165"]
+script = ExtResource("9_7g7e2")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="Resource" id="Resource_scsaw"]
 script = ExtResource("9_7g7e2")
 duration = 1.0
 transition = 0
@@ -88,13 +93,17 @@ tween_resource = SubResource("Resource_lu165")
 limit_left = 0
 limit_right = 320
 
-[node name="EnemyJet3" parent="." instance=ExtResource("8_huvhi")]
-position = Vector2(160, 59)
-rotation = -3.14159
+[node name="FreeCamController" type="Node2D" parent="."]
+script = ExtResource("10_msv50")
 
-[node name="Rocket" parent="." instance=ExtResource("10_5ekyv")]
-position = Vector2(162, 69)
-rotation = -1.57079
-speed = 10.0
+[node name="FreeCamera" type="Node2D" parent="FreeCamController" node_paths=PackedStringArray("follow_target")]
+script = ExtResource("6_04mai")
+follow_mode = 1
+follow_target = NodePath("../CamTarget")
+snap_to_pixel = true
+tween_resource = SubResource("Resource_scsaw")
+tween_on_load = false
+
+[node name="CamTarget" type="Node2D" parent="FreeCamController"]
 
 [editable path="LevelManager"]

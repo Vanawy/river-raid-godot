@@ -5,14 +5,21 @@ var spawn_area_size : Vector2;
 var spawn_area : Area2D;
 
 @onready var enemy_jet_scene: PackedScene = preload("res://enemies/jet/enemy_jet.tscn")
+@onready var aa_boat_scene: PackedScene = preload("res://enemies/boat/boat.tscn")
+
 
 func _ready() -> void:
 	#add_child()
 	pass
 	
-func spawn_enemy(player: Jet, level: Level) -> int:
-	spawn_jet(player.global_position + Vector2.UP * 512 + Vector2.RIGHT * randf_range(-64, 64), level)
-	return 0
+func spawn_enemy(player: Jet, level: Level) -> float:
+	var k: float = randf()
+	if k < 0.99:
+		spawn_aa_boat(player.global_position, level)
+		return 4
+	else:
+		spawn_jet(player.global_position, level)
+		return 2 + randf() * 1
 	
 
 func spawn_jets(level: Level, count: int) -> void:
@@ -29,12 +36,21 @@ func spawn_jets(level: Level, count: int) -> void:
 	#enemies_spawned = true
 	
 func spawn_jet(global_pos: Vector2, level: Level) -> void:
+		var offset: Vector2 = Vector2.UP * 512 + Vector2.RIGHT * randf_range(-32, 32)
 		var enemy: EnemyJet = enemy_jet_scene.instantiate()
-		enemy.position = level.to_local(global_pos)
+		enemy.position = level.to_local(global_pos + offset)
 		enemy.rotate(PI)
 		level.add_child.call_deferred(enemy)
-		print("enemy spawned at " + str(enemy.global_position.x) + ", " + str(enemy.global_position.y))
+		print("enemy jet spawned")
 
+func spawn_aa_boat(global_pos: Vector2, level: Level) -> void:
+		var enemy: Enemy = aa_boat_scene.instantiate()
+		var boat_width_tiles: int = 2
+		enemy.position = level.get_closest_spawn_horizontal(global_pos + Vector2.UP * 512, boat_width_tiles)
+		level.add_child.call_deferred(enemy)
+		print("aa boat spawned")
+		print(enemy.position)
+	
 #func _draw() -> void: 
 	#if !enemies_spawned:
 		#queue_redraw()

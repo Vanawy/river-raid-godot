@@ -123,10 +123,10 @@ shape = SubResource("RectangleShape2D_g5jmo")
 [node name="ExplosionSpawner" parent="Bridge" instance=ExtResource("8_u52u8")]
 z_index = 1
 position = Vector2(-8, 0)
-editor_color = Color(0.862745, 0.0784314, 0.235294, 1)
 explosion_preload = ExtResource("9_u0mlk")
 explosion_area = Vector2(48, 16)
 explosions_count = 10
+editor_color = Color(0.862745, 0.0784314, 0.235294, 1)
 
 [node name="LevelEndCloseTrigger" type="Area2D" parent="."]
 position = Vector2(-160, -208)

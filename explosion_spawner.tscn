@@ -5,7 +5,5 @@
 [node name="ExplosionSpawner" type="Node2D"]
 z_index = 5
 script = ExtResource("1_x17hr")
-editor_color = null
 explosion_preload = null
 explosion_area = Vector2(0, 0)
-explosions_count = null
