@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbby63pyldyiu"]
+[gd_scene load_steps=7 format=3 uid="uid://bbby63pyldyiu"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_up0hr"]
 [ext_resource type="Texture2D" uid="uid://jesxgryyxtja" path="res://boat-medium.png" id="2_dk1wf"]
 [ext_resource type="PackedScene" uid="uid://c0wfkm054sx6r" path="res://enemies/pantsir.tscn" id="3_eqp66"]
+[ext_resource type="PackedScene" uid="uid://ktk24ijbbbtr" path="res://explosion_spawner.tscn" id="4_tjom6"]
+[ext_resource type="PackedScene" uid="uid://chsfihfc2jfl5" path="res://explosion.tscn" id="5_cr2rt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g61iu"]
 size = Vector2(28.835, 10)
@@ -23,3 +25,13 @@ frame_progress = 0.0580407
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.417496, 0)
 shape = SubResource("RectangleShape2D_g61iu")
+
+[node name="ExplosionSpawner" parent="." instance=ExtResource("4_tjom6")]
+z_index = 10
+position = Vector2(-12, -3)
+explosion_preload = ExtResource("5_cr2rt")
+explosion_area = Vector2(24, 6)
+explosions_count = 4
+editor_color = Color(0.862745, 0.0784314, 0.235294, 1)
+
+[connection signal="destroyed" from="." to="ExplosionSpawner" method="spawn_explosions"]

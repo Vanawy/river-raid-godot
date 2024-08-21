@@ -14,7 +14,6 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	spriteDestroyed.visible = false
-	@warning_ignore("unsafe_method_access")
 	bridgeEntity.destroyed.connect(destroy)
 	switch_pcam_trigger.body_entered.connect(func(_body: Node2D) -> void:
 		print("cam switch")

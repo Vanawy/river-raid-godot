@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ktk24ijbbbtr"]
+
+[ext_resource type="Script" path="res://explosion_spawner.gd" id="1_x17hr"]
+
+[node name="ExplosionSpawner" type="Node2D"]
+z_index = 5
+script = ExtResource("1_x17hr")
+editor_color = null
+explosion_preload = null
+explosion_area = Vector2(0, 0)
+explosions_count = null

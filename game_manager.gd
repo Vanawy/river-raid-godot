@@ -15,7 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	time += 1 * delta
-	if randf() < 0.005:
+	if randf() < 0.0005:
 		enemy_spawner.spawn_enemy(player, level_manager.current_level)
 
 func _input(event: InputEvent) -> void:

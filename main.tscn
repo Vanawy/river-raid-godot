@@ -24,7 +24,7 @@ duration = 1.0
 transition = 0
 ease = 2
 
-[node name="Main" type="Node2D"]
+[node name="main" type="Node2D"]
 
 [node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("player", "level_manager", "enemy_spawner")]
 script = ExtResource("1_30pe5")
