@@ -33,7 +33,7 @@ func _ready() -> void:
 		queue_free()
 	)
 	
-	var level_enter_area: Area2D = $LevelEndCloseTrigger
+	var level_enter_area: Area2D = $LevelEnteredTrigger
 	level_enter_area.body_entered.connect(func (_body: Node2D) -> void:
 		print("player entered level")
 		player_entered_level.emit()

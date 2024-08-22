@@ -30,6 +30,9 @@ var input_horizontal: float = 0
 
 @export var _flares_count: int = 3
 
+
+signal died
+
 func _ready() -> void: 
 	var hitbox : Area2D = $Hitbox
 	hitbox.body_entered.connect(on_collision)
@@ -99,6 +102,7 @@ func death() -> void:
 	if is_dead:
 		return
 	is_dead = true
+	died.emit()
 	
 	$Hitbox/CollisionShape2D.set_deferred("disabled", true)
 	$CollisionShape2D.set_deferred("disabled", true)
