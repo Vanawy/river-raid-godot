@@ -7,6 +7,10 @@ const ROCKETS_IN_ROW: int = 3
 
 var indicators: Array[AnimatedSprite2D] = []
 var loaded_rockets: Array[bool] = []
+
+var reloading_rocket: int = -1;
+
+@onready var reload_timer: Timer = $ReloadTimer
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,7 +23,8 @@ func _ready() -> void:
 		indicator.add_sibling(new_indicator)
 		indicators.append(new_indicator)
 		loaded_rockets.append(true)
-		
+	
+	reload_timer.timeout.connect(_rocket_loaded)
 
 func fire() -> bool:
 	var x := _get_loaded_rocket()
@@ -38,11 +43,34 @@ func _get_loaded_rocket() -> int:
 
 func _fire_rocket(n: int) -> void:
 	loaded_rockets[n] = false
+	if reloading_rocket == -1:
+		reloading_rocket = n
 	indicators[n].play("fire")
 	await indicators[n].animation_finished
 	indicators[n].play("load")
+	indicators[n].pause()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _physics_process(delta: float) -> void:
+	_reload_rockets()
+	
+func _reload_rockets() -> void:
+	if reloading_rocket == -1:
+		return
+		
+	if loaded_rockets[reloading_rocket]:
+		reloading_rocket = (reloading_rocket + 1) % rockets_count
+		return
+		
+	if reload_timer.is_stopped():
+		reload_timer.start()
+		
+	var indicator: AnimatedSprite2D = indicators[reloading_rocket]
+	if indicator.animation != "load":
+		return
+	indicator.frame = int(indicator.sprite_frames.get_frame_count("load") * (reload_timer.wait_time - reload_timer.time_left))
+		
+func _rocket_loaded() -> void:
+	if reloading_rocket == -1:
+		return
+	loaded_rockets[reloading_rocket] = true
