@@ -1,7 +1,7 @@
 extends Node2D
 class_name Rockets
 
-const ROCKETS_IN_ROW: int = 3
+const ROCKETS_IN_ROW: int = 2
 
 @export var rockets_count: int = 3
 
@@ -68,9 +68,14 @@ func _reload_rockets() -> void:
 	var indicator: AnimatedSprite2D = indicators[reloading_rocket]
 	if indicator.animation != "load":
 		return
-	indicator.frame = int(indicator.sprite_frames.get_frame_count("load") * (reload_timer.wait_time - reload_timer.time_left))
-		
+	indicator.set_frame_and_progress(
+		int(indicator.sprite_frames.get_frame_count("load") 
+			* (reload_timer.wait_time - reload_timer.time_left)),
+		0
+	)
+	
 func _rocket_loaded() -> void:
 	if reloading_rocket == -1:
 		return
 	loaded_rockets[reloading_rocket] = true
+	indicators[reloading_rocket].play("ready")
