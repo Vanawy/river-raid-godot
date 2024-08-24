@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://chvnmx1w7aeo4"]
+[gd_scene load_steps=23 format=3 uid="uid://chvnmx1w7aeo4"]
 
 [ext_resource type="Script" path="res://Jet.gd" id="1_tmj2b"]
 [ext_resource type="SpriteFrames" uid="uid://boaxed37mb2im" path="res://jet/jet_blue_sprites.tres" id="2_6il8l"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="3_888rj"]
 [ext_resource type="Texture2D" uid="uid://bxl32a122p23a" path="res://flare.png" id="4_nfkh3"]
 [ext_resource type="Texture2D" uid="uid://cte82o442osiw" path="res://flare-trail.png" id="5_evvcj"]
+[ext_resource type="Script" path="res://jet/rockets.gd" id="7_1pyfm"]
+[ext_resource type="Texture2D" uid="uid://lrxhb6mlh7ql" path="res://jet/rocket_indicator-Sheet.png" id="7_r8bui"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6q6oa"]
 lifetime_randomness = 0.3
@@ -35,6 +37,75 @@ size = Vector2(42, 50)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1q7eu"]
 radius = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l63j1"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(0, 8, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4o8kd"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(4, 8, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mppkg"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnigu"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(4, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exeap"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(8, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1xsj"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(0, 4, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tiv0e"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(4, 4, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxwkw"]
+atlas = ExtResource("7_r8bui")
+region = Rect2(8, 4, 4, 4)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7amdy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l63j1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4o8kd")
+}],
+"loop": false,
+"name": &"fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mppkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnigu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exeap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1xsj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tiv0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxwkw")
+}],
+"loop": false,
+"name": &"load",
+"speed": 5.0
+}]
 
 [node name="Jet" type="AnimatableBody2D"]
 z_index = 100
@@ -96,3 +167,19 @@ shape = SubResource("RectangleShape2D_hb738")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_1q7eu")
+
+[node name="Indicators" type="Node2D" parent="."]
+
+[node name="Rockets" type="Node2D" parent="Indicators"]
+position = Vector2(9, 3)
+script = ExtResource("7_1pyfm")
+rockets_count = 4
+
+[node name="Indicator" type="AnimatedSprite2D" parent="Indicators/Rockets"]
+sprite_frames = SubResource("SpriteFrames_7amdy")
+animation = &"load"
+frame = 5
+
+[node name="ReloadTimer" type="Timer" parent="Indicators/Rockets"]
+process_callback = 0
+one_shot = true

@@ -8,12 +8,12 @@ Todo:
     ☐ Jets flying in formation
     ✔ Some variation to jets movement @done(24-08-20 19:13)
     ☐ Boats patroling river
-    ☐ Some boats spawn with AA
+    ✔ Some boats spawn with AA @done(24-08-23 00:38)
     ☐ AA on river banks
   ☐ Add fuel depots. Flying over these will replenish the player's fuel reserves. The player can shoot and destroy fuel depots, but colliding with them doesn't kill the player.
   ☐ Add a UI with a life counter, score, and fuel gauge. 
   ☐ The fuel gauge will drain slowly, and the player will die if it reaches “empty”
-  ☐ Give the player the ability to shoot things! 
+  ✔ Give the player the ability to shoot things! @done(24-08-23 00:40)
   ☐ Shooting things increases the player score.
 
 

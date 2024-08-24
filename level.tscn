@@ -40,7 +40,7 @@ ease = 2
 size = Vector2(32, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_05i8x"]
-size = Vector2(320, 512)
+size = Vector2(320, 768)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wird4"]
 size = Vector2(288, 20)
@@ -133,7 +133,7 @@ position = Vector2(-160, -208)
 collision_mask = 256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelEndCloseTrigger"]
-position = Vector2(160, -2420)
+position = Vector2(160, -2250)
 shape = SubResource("RectangleShape2D_05i8x")
 
 [node name="UnloadLevelTrigger" type="Area2D" parent="."]

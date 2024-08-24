@@ -17,6 +17,7 @@ var V_SPEED_CHANGE: float = 40
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var smoke_emitter : GPUParticles2D = $Smoke
 @onready var flares : GPUParticles2D = $Flares
+@onready var rockets: Rockets = $Indicators/Rockets
 
 @onready var rocket_scn: PackedScene = preload("res://jet/rocket.tscn")
 
@@ -65,6 +66,8 @@ func _process(_delta: float) -> void:
 		fire()
 		
 func fire() -> void:
+	if !rockets.fire():
+		return
 	var new_rocket: Rocket = rocket_scn.instantiate()
 	add_sibling.call_deferred(new_rocket)
 	new_rocket.speed += -velocity.y
