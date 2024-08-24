@@ -84,12 +84,13 @@ zoom = Vector2(1.5, 1.5)
 tween_resource = SubResource("Resource_v4ldd")
 
 [node name="MainCamera" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
-position = Vector2(160, 252)
+position = Vector2(160, 237.42)
 script = ExtResource("6_04mai")
 priority = 50
 follow_mode = 2
 follow_target = NodePath("../Jet")
 tween_resource = SubResource("Resource_lu165")
+follow_offset = Vector2(0, -14.58)
 limit_left = 0
 limit_right = 320
 

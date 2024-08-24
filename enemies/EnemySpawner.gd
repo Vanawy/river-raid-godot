@@ -14,7 +14,7 @@ func _ready() -> void:
 	
 func spawn_enemy(player: Jet, level: Level) -> float:
 	var k: float = randf()
-	if k < 0.99:
+	if k < 0.3:
 		spawn_aa_boat(player.global_position, level)
 		return 4
 	else:
@@ -46,7 +46,7 @@ func spawn_jet(global_pos: Vector2, level: Level) -> void:
 func spawn_aa_boat(global_pos: Vector2, level: Level) -> void:
 		var enemy: Enemy = aa_boat_scene.instantiate()
 		var boat_width_tiles: int = 2
-		enemy.position = level.get_first_spawn_horizontal(global_pos + Vector2.UP * 512, boat_width_tiles)
+		enemy.position = level.get_first_spawn_horizontal(global_pos + Vector2.UP * 256, boat_width_tiles)
 		level.add_child.call_deferred(enemy)
 		print("aa boat spawned")
 		print(enemy.position)

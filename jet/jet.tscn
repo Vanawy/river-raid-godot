@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://chvnmx1w7aeo4"]
+[gd_scene load_steps=23 format=3 uid="uid://chvnmx1w7aeo4"]
 
 [ext_resource type="Script" path="res://Jet.gd" id="1_tmj2b"]
 [ext_resource type="SpriteFrames" uid="uid://boaxed37mb2im" path="res://jet/jet_blue_sprites.tres" id="2_6il8l"]
@@ -62,10 +62,6 @@ region = Rect2(8, 0, 4, 4)
 atlas = ExtResource("7_r8bui")
 region = Rect2(0, 4, 4, 4)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tiv0e"]
-atlas = ExtResource("7_r8bui")
-region = Rect2(4, 4, 4, 4)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_cttrw"]
 atlas = ExtResource("7_r8bui")
 region = Rect2(8, 4, 4, 4)
@@ -99,11 +95,8 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j1xsj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tiv0e")
 }],
-"loop": false,
+"loop": true,
 "name": &"load",
 "speed": 5.0
 }, {
@@ -189,9 +182,8 @@ rockets_count = 4
 
 [node name="Indicator" type="AnimatedSprite2D" parent="Indicators/Rockets"]
 sprite_frames = SubResource("SpriteFrames_7amdy")
-animation = &"ready"
+animation = &"load"
 autoplay = "ready"
-frame = 1
 
 [node name="ReloadTimer" type="Timer" parent="Indicators/Rockets"]
 process_callback = 0

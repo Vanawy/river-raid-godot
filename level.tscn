@@ -128,6 +128,14 @@ explosion_area = Vector2(48, 16)
 explosions_count = 10
 editor_color = Color(0.862745, 0.0784314, 0.235294, 1)
 
+[node name="ExplosionSpawner2" parent="Bridge" instance=ExtResource("8_u52u8")]
+z_index = 1
+position = Vector2(-82, 6)
+explosion_preload = ExtResource("9_u0mlk")
+explosion_area = Vector2(179.425, 3.115)
+explosions_count = 10
+editor_color = Color(0.696011, 0.373434, 5.77569e-07, 1)
+
 [node name="LevelEndCloseTrigger" type="Area2D" parent="."]
 position = Vector2(-160, -208)
 collision_mask = 256
@@ -157,3 +165,4 @@ tile_map_data = PackedByteArray("AAABAPb/AAADAAIAAAABAPf/AAADAAIAAAABAPj/AAADAAI
 tile_set = ExtResource("1_2lcah")
 
 [connection signal="destroyed" from="Bridge/Bridge" to="Bridge/ExplosionSpawner" method="spawn_explosions"]
+[connection signal="destroyed" from="Bridge/Bridge" to="Bridge/ExplosionSpawner2" method="spawn_explosions"]

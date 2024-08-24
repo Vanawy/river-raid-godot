@@ -19,7 +19,6 @@ func _physics_process(delta: float) -> void:
 	move_local_x(speed * delta)
 	
 func destroy() -> void:
-
 	speed = 0
 	smoke.emitting = false
 	sprite.visible = false
@@ -29,7 +28,7 @@ func destroy() -> void:
 	queue_free()
 
 func hit(body : Node2D) -> void:
-	collider.queue_free()
+	collider.disabled = true
 	#if body is Level:
 		#destroy()
 	if body is Enemy:

@@ -48,7 +48,6 @@ func _fire_rocket(n: int) -> void:
 	indicators[n].play("fire")
 	await indicators[n].animation_finished
 	indicators[n].play("load")
-	indicators[n].pause()
 
 
 func _physics_process(delta: float) -> void:
@@ -64,15 +63,6 @@ func _reload_rockets() -> void:
 		
 	if reload_timer.is_stopped():
 		reload_timer.start()
-		
-	var indicator: AnimatedSprite2D = indicators[reloading_rocket]
-	if indicator.animation != "load":
-		return
-	indicator.set_frame_and_progress(
-		int(indicator.sprite_frames.get_frame_count("load") 
-			* (reload_timer.wait_time - reload_timer.time_left)),
-		0
-	)
 	
 func _rocket_loaded() -> void:
 	if reloading_rocket == -1:
