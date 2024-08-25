@@ -22,6 +22,10 @@ func _ready() -> void:
 	level_manager.level_started.connect(enable_spawn)
 	level_manager.level_finished.connect(disable_spawn)
 	player.died.connect(disable_spawn)
+	
+	level_manager.level_changed.connect(func() -> void:
+		difficulty_multiplier += 0.2
+	)
 
 func _physics_process(delta: float) -> void:
 	if can_spawn_enemies:

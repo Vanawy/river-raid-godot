@@ -19,6 +19,7 @@ func _physics_process(delta: float) -> void:
 	move_local_x(speed * delta)
 	
 func destroy() -> void:
+	collider.set_deferred("disabled", true)
 	speed = 0
 	smoke.emitting = false
 	sprite.visible = false
@@ -28,7 +29,6 @@ func destroy() -> void:
 	queue_free()
 
 func hit(body : Node2D) -> void:
-	collider.disabled = true
 	#if body is Level:
 		#destroy()
 	if body is Enemy:

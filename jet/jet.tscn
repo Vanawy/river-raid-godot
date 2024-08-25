@@ -242,6 +242,7 @@ shape = SubResource("CircleShape2D_1q7eu")
 position = Vector2(10, 3)
 script = ExtResource("7_eykol")
 ammo_count = 4
+reload_time = 4.0
 
 [node name="Indicator" type="AnimatedSprite2D" parent="Indicators/Rockets"]
 sprite_frames = SubResource("SpriteFrames_7amdy")
