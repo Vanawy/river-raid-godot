@@ -16,8 +16,10 @@ var V_SPEED_CHANGE: float = 40
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var smoke_emitter : GPUParticles2D = $Smoke
-@onready var flares : GPUParticles2D = $Flares
-@onready var rockets: Rockets = $Indicators/Rockets
+@onready var flares_emitter : GPUParticles2D = $Flares
+
+@onready var rockets: ReloadIndicators = $Indicators/Rockets
+@onready var flares: ReloadIndicators = $Indicators/Flares
 
 @onready var rocket_scn: PackedScene = preload("res://jet/rocket.tscn")
 
@@ -28,8 +30,6 @@ var state : States = States.FORWARD
 var is_dead: bool = false
 
 var input_horizontal: float = 0
-
-@export var _flares_count: int = 3
 
 
 signal died
@@ -109,6 +109,8 @@ func death() -> void:
 	
 	$Hitbox/CollisionShape2D.set_deferred("disabled", true)
 	$CollisionShape2D.set_deferred("disabled", true)
+	$Indicators.visible = false
+	
 	# velocity = Vector2.ZERO
 	# create_explosion()
 	sprite.self_modulate = Color.hex(0x292929ff)
@@ -131,11 +133,10 @@ func death() -> void:
 func launch_flares(rocket: EnemyRocket) -> void:
 		if rocket.is_confused:
 			return
-		if _flares_count < 1:
+		if !flares.fire():
 			print("no flares left")
 			return
-		flares.restart()
-		_flares_count -= 1
+		flares_emitter.restart()
 		await get_tree().create_timer(0.1).timeout
 		if (is_instance_valid(rocket)):
 			rocket.confuse()

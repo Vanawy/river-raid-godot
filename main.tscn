@@ -39,7 +39,6 @@ enemy_spawner = NodePath("../LevelManager/EnemySpawner")
 
 [node name="Jet" parent="." instance=ExtResource("1_x0prs")]
 position = Vector2(160, 252)
-_flares_count = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 2
@@ -82,6 +81,7 @@ script = ExtResource("6_04mai")
 priority = 200
 zoom = Vector2(1.5, 1.5)
 tween_resource = SubResource("Resource_v4ldd")
+draw_limits = true
 
 [node name="MainCamera" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 position = Vector2(160, 237.42)
@@ -91,6 +91,7 @@ follow_mode = 2
 follow_target = NodePath("../Jet")
 tween_resource = SubResource("Resource_lu165")
 follow_offset = Vector2(0, -14.58)
+draw_limits = true
 limit_left = 0
 limit_right = 320
 
@@ -104,6 +105,7 @@ follow_target = NodePath("../CamTarget")
 snap_to_pixel = true
 tween_resource = SubResource("Resource_scsaw")
 tween_on_load = false
+draw_limits = true
 
 [node name="CamTarget" type="Node2D" parent="FreeCamController"]
 
