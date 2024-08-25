@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0lmw5o1pryfo"]
+
+[ext_resource type="Script" path="res://components/patroling_behavior.gd" id="1_scxh8"]
+
+[node name="PatrolingBehavior" type="Node2D"]
+script = ExtResource("1_scxh8")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(20, 0)

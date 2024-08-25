@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://c0wfkm054sx6r"]
+[gd_scene load_steps=16 format=3 uid="uid://c0wfkm054sx6r"]
 
 [ext_resource type="Texture2D" uid="uid://bvolwr3vtaonv" path="res://pantsir.png" id="1_b6x0n"]
 [ext_resource type="PackedScene" uid="uid://nejnlh1fk42n" path="res://enemies/anti_air_rocket_launcher.tscn" id="2_uo55c"]
+[ext_resource type="Script" path="res://components/keep_global_rotation.gd" id="3_ui67x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q66j2"]
 atlas = ExtResource("1_b6x0n")
@@ -67,9 +68,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iknb1"]
-size = Vector2(128, 64)
-
 [sub_resource type="Animation" id="Animation_4k8vq"]
 resource_name = "scan"
 loop_mode = 1
@@ -91,10 +89,19 @@ _data = {
 "scan": SubResource("Animation_4k8vq")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iknb1"]
+size = Vector2(128, 64)
+
 [node name="pantsir" type="AnimatedSprite2D"]
 z_index = 10
 sprite_frames = SubResource("SpriteFrames_2jqo6")
 autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_srp7q")
+}
+autoplay = "scan"
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
@@ -103,20 +110,18 @@ collision_mask = 256
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -32)
 shape = SubResource("RectangleShape2D_iknb1")
+debug_color = Color(0.980392, 0.509804, 0.568627, 0.27451)
 
 [node name="Line2D" type="Line2D" parent="Area2D/CollisionShape2D"]
-position = Vector2(64.6975, 0)
+position = Vector2(-65, 0)
 rotation = -0.00197541
 points = PackedVector2Array(0, 30, 0, -30)
 width = 2.0
 default_color = Color(0, 0.901961, 0, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_srp7q")
-}
-autoplay = "scan"
-
 [node name="AntiAirRocketLauncher" parent="." node_paths=PackedStringArray("detection_area") instance=ExtResource("2_uo55c")]
 position = Vector2(1, -4)
 detection_area = NodePath("../Area2D")
+
+[node name="KeepGlobalRotation" type="Node2D" parent="."]
+script = ExtResource("3_ui67x")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbby63pyldyiu"]
+[gd_scene load_steps=8 format=3 uid="uid://bbby63pyldyiu"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_up0hr"]
 [ext_resource type="Texture2D" uid="uid://jesxgryyxtja" path="res://boat-medium.png" id="2_dk1wf"]
 [ext_resource type="PackedScene" uid="uid://c0wfkm054sx6r" path="res://enemies/pantsir.tscn" id="3_eqp66"]
 [ext_resource type="PackedScene" uid="uid://ktk24ijbbbtr" path="res://explosion_spawner.tscn" id="4_tjom6"]
 [ext_resource type="PackedScene" uid="uid://chsfihfc2jfl5" path="res://explosion.tscn" id="5_cr2rt"]
+[ext_resource type="PackedScene" uid="uid://c0lmw5o1pryfo" path="res://components/patroling_behavior.tscn" id="6_yt0hk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g61iu"]
 size = Vector2(28.835, 10)
@@ -15,12 +16,16 @@ collision_mask = 512
 sync_to_physics = false
 script = ExtResource("1_up0hr")
 
-[node name="Boat-medium" type="Sprite2D" parent="."]
-texture = ExtResource("2_dk1wf")
+[node name="CargoPlace" type="Node2D" parent="."]
+position = Vector2(-5, 0)
 
-[node name="pantsir" parent="Boat-medium" instance=ExtResource("3_eqp66")]
-position = Vector2(5, 0)
+[node name="pantsir" parent="CargoPlace" instance=ExtResource("3_eqp66")]
 frame_progress = 0.0580407
+
+[node name="Sprite" type="Sprite2D" parent="."]
+rotation = 6.28318
+texture = ExtResource("2_dk1wf")
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.417496, 0)
@@ -33,5 +38,8 @@ explosion_preload = ExtResource("5_cr2rt")
 explosion_area = Vector2(24, 6)
 explosions_count = 4
 editor_color = Color(0.862745, 0.0784314, 0.235294, 1)
+
+[node name="PatrolingBehavior" parent="." instance=ExtResource("6_yt0hk")]
+speed = 4.0
 
 [connection signal="destroyed" from="." to="ExplosionSpawner" method="spawn_explosions"]

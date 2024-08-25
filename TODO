@@ -3,13 +3,13 @@ Todo:
   ✔ Create and animate a jet fighter. The screen will scroll vertically, and the jet can move side to side. The player can accelerate or brake, which will change the vertical scrolling speed.
   ✔ Add a river bank on both sides of the level. The river can vary in size, or even split into two streams. Hitting the river bank will kill the player. 
   ✔ Divide the game into levels. Between levels, the river will narrow, and there will be a bridge crossing it. Bridges act as checkpoints. The player must shoot the bridge, colliding with it will kill the player. 
-  ☐ Add some enemies! Boats and helicopters will move back and forth across the river. Jets will cross the entire screen. Colliding with an enemy will kill the player.
+  ✔ Add some enemies! Boats and helicopters will move back and forth across the river. Jets will cross the entire screen. Colliding with an enemy will kill the player. @done(24-08-25 21:11)
     ✔ Jets flying on each level @done(24-04-25 13:26) 
     ✔ Jets flying in formation @done(24-08-25 13:59)
     ✔ Some variation to jets movement @done(24-08-20 19:13)
-    ☐ Boats patroling river
+    ✔ Boats patroling river @done(24-08-25 21:11)
     ✔ Some boats spawn with AA @done(24-08-23 00:38)
-    ☐ AA on river banks
+    ✘ AA on river banks @cancelled(24-08-25 20:50)
   ☐ Add fuel depots. Flying over these will replenish the player's fuel reserves. The player can shoot and destroy fuel depots, but colliding with them doesn't kill the player.
   ☐ Add a UI with a life counter, score, and fuel gauge. 
   ☐ The fuel gauge will drain slowly, and the player will die if it reaches “empty”
