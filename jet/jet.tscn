@@ -254,7 +254,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="Flares" type="Node2D" parent="Indicators"]
-position = Vector2(-10, 3)
+position = Vector2(-11, 1)
 script = ExtResource("7_eykol")
 indicators_in_row = 1
 reload_time = 0.0
@@ -263,6 +263,7 @@ reload_time = 0.0
 sprite_frames = SubResource("SpriteFrames_2esu3")
 animation = &"ready"
 autoplay = "ready"
+centered = false
 
 [node name="ReloadTimer" type="Timer" parent="Indicators/Flares"]
 process_callback = 0

@@ -103,6 +103,7 @@ region_rect = Rect2(80, 48, 32, 16)
 position = Vector2(16, 109)
 script = ExtResource("7_061df")
 tween_resource = SubResource("Resource_g1q44")
+draw_limits = true
 
 [node name="Bridge" type="AnimatableBody2D" parent="Bridge"]
 collision_layer = 3
