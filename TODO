@@ -5,7 +5,7 @@ Todo:
   ✔ Divide the game into levels. Between levels, the river will narrow, and there will be a bridge crossing it. Bridges act as checkpoints. The player must shoot the bridge, colliding with it will kill the player. 
   ☐ Add some enemies! Boats and helicopters will move back and forth across the river. Jets will cross the entire screen. Colliding with an enemy will kill the player.
     ✔ Jets flying on each level @done(24-04-25 13:26) 
-    ☐ Jets flying in formation
+    ✔ Jets flying in formation @done(24-08-25 13:59)
     ✔ Some variation to jets movement @done(24-08-20 19:13)
     ☐ Boats patroling river
     ✔ Some boats spawn with AA @done(24-08-23 00:38)

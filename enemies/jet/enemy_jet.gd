@@ -8,7 +8,7 @@ var V_SPEED_CHANGE: float = 32
 
 var move_direction: float = 0;
 
-var time: float = 0;
+var time: float = randf() * 10;
 
 
 enum States {
@@ -41,7 +41,6 @@ func _ready() -> void:
 	hitbox.body_entered.connect(on_collision)
 	sprite.play("default")
 	
-	time += randf() * 10
 	# var countermeasures_area : Area2D = $CounterMeasuresArea
 	# countermeasures_area.body_entered.connect(func(body: Node2D):
 	# 	if body is EnemyRocket:

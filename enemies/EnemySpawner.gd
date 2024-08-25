@@ -15,38 +15,37 @@ func _ready() -> void:
 func spawn_enemy(player: Jet, level: Level) -> float:
 	var k: float = randf()
 	if k < 0.3:
-		spawn_aa_boat(player.global_position, level)
-		return 4
+		var offset: Vector2 = Vector2.UP * 256
+		spawn_aa_boat(player.global_position + offset, level)
+		return 2
+	if k < 0.7:
+		var offset: Vector2 = Vector2.UP * 512
+		spawn_jet_formation(player.global_position + offset, level)
+		return 3
 	else:
-		spawn_jet(player.global_position, level)
-		return 2 + randf() * 1
-	
-
-func spawn_jets(level: Level, count: int) -> void:
-	spawn_area_size = level.top_right.position - level.bot_left.position
-	# spawn_area_size /= Vector2()
-
-	for i: int  in range(count):
-		var pos := Vector2(
-			randf_range(0, spawn_area_size.x),
-			randf_range(0, spawn_area_size.y),
-		)
-		
-		spawn_jet(level.bot_left.global_position + pos, level)
-	#enemies_spawned = true
-	
-func spawn_jet(global_pos: Vector2, level: Level) -> void:
 		var offset: Vector2 = Vector2.UP * 512 + Vector2.RIGHT * randf_range(-32, 32)
+		spawn_jet(player.global_position + offset, level)
+		return 1 + randf() * 1
+	
+	
+func spawn_jet_formation(global_pos: Vector2, level: Level) -> void:
+	spawn_jet(global_pos, level, true)
+	spawn_jet(global_pos + Vector2.UP * 32 + Vector2.LEFT * 16, level, true)
+	spawn_jet(global_pos + Vector2.UP * 32 + Vector2.RIGHT * 16, level, true)
+	
+func spawn_jet(global_pos: Vector2, level: Level, remove_random: bool = false) -> void:
 		var enemy: EnemyJet = enemy_jet_scene.instantiate()
-		enemy.position = level.to_local(global_pos + offset)
+		enemy.position = level.to_local(global_pos)
 		enemy.rotate(PI)
+		if remove_random:
+			enemy.time = 0
 		level.add_child.call_deferred(enemy)
 		print("enemy jet spawned")
 
 func spawn_aa_boat(global_pos: Vector2, level: Level) -> void:
 		var enemy: Enemy = aa_boat_scene.instantiate()
 		var boat_width_tiles: int = 2
-		enemy.position = level.get_first_spawn_horizontal(global_pos + Vector2.UP * 256, boat_width_tiles)
+		enemy.position = level.get_first_spawn_horizontal(global_pos, boat_width_tiles)
 		level.add_child.call_deferred(enemy)
 		print("aa boat spawned")
 		print(enemy.position)
