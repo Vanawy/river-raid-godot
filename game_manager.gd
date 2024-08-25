@@ -2,6 +2,11 @@ extends Node2D
 
 #var time : float = 0
 
+var game_score: float = 0
+
+const LEVEL_SCORE: int = 10000
+const KILL_SCORE: int = 500
+
 @export var player: Jet
 @export var level_manager: LevelManager
 @export var enemy_spawner: EnemySpawner
@@ -24,8 +29,12 @@ func _ready() -> void:
 	player.died.connect(disable_spawn)
 	
 	level_manager.level_changed.connect(func() -> void:
+		_add_score(LEVEL_SCORE)
 		difficulty_multiplier += 0.2
 	)
+	
+func _add_score(score: float) -> void:
+	game_score += score * difficulty_multiplier
 
 func _physics_process(delta: float) -> void:
 	if can_spawn_enemies:

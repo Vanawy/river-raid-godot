@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://chvnmx1w7aeo4"]
+[gd_scene load_steps=34 format=3 uid="uid://chvnmx1w7aeo4"]
 
 [ext_resource type="Script" path="res://Jet.gd" id="1_tmj2b"]
 [ext_resource type="SpriteFrames" uid="uid://boaxed37mb2im" path="res://jet/jet_blue_sprites.tres" id="2_6il8l"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cte82o442osiw" path="res://flare-trail.png" id="5_evvcj"]
 [ext_resource type="Script" path="res://jet/reload_indicators.gd" id="7_eykol"]
 [ext_resource type="Texture2D" uid="uid://lrxhb6mlh7ql" path="res://jet/rocket_indicator-Sheet.png" id="7_r8bui"]
+[ext_resource type="Texture2D" uid="uid://ccybq3qtjqemh" path="res://jet/flares_indicator.png" id="9_apb75"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6q6oa"]
 lifetime_randomness = 0.3
@@ -124,15 +125,43 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hmtgs"]
-atlas = ExtResource("4_nfkh3")
-region = Rect2(0, 0, 3, 3)
+[sub_resource type="AtlasTexture" id="AtlasTexture_7b21y"]
+atlas = ExtResource("9_apb75")
+region = Rect2(4, 4, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5w5q"]
+atlas = ExtResource("9_apb75")
+region = Rect2(0, 8, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb8xa"]
+atlas = ExtResource("9_apb75")
+region = Rect2(4, 8, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g76fb"]
+atlas = ExtResource("9_apb75")
+region = Rect2(0, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma8mn"]
+atlas = ExtResource("9_apb75")
+region = Rect2(4, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0umt"]
+atlas = ExtResource("9_apb75")
+region = Rect2(8, 0, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jupof"]
+atlas = ExtResource("9_apb75")
+region = Rect2(0, 4, 4, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wolwo"]
+atlas = ExtResource("9_apb75")
+region = Rect2(8, 8, 4, 4)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2esu3"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_udday")
+"texture": SubResource("AtlasTexture_7b21y")
 }],
 "loop": true,
 "name": &"empty",
@@ -140,10 +169,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l63j1")
+"texture": SubResource("AtlasTexture_m5w5q")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4o8kd")
+"texture": SubResource("AtlasTexture_tb8xa")
 }],
 "loop": false,
 "name": &"fire",
@@ -151,16 +180,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mppkg")
+"texture": SubResource("AtlasTexture_g76fb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mnigu")
+"texture": SubResource("AtlasTexture_ma8mn")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_exeap")
+"texture": SubResource("AtlasTexture_k0umt")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_j1xsj")
+"texture": SubResource("AtlasTexture_jupof")
 }],
 "loop": true,
 "name": &"load",
@@ -168,7 +197,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hmtgs")
+"texture": SubResource("AtlasTexture_wolwo")
 }],
 "loop": false,
 "name": &"ready",
@@ -258,7 +287,7 @@ one_shot = true
 position = Vector2(-11, 1)
 script = ExtResource("7_eykol")
 indicators_in_row = 1
-reload_time = 0.0
+reload_time = 30.0
 
 [node name="Indicator" type="AnimatedSprite2D" parent="Indicators/Flares"]
 sprite_frames = SubResource("SpriteFrames_2esu3")
