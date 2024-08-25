@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	#time += 1 * delta
 	if spawn_score > 0 && can_spawn_enemies:
-		spawn_score -= enemy_spawner.spawn_enemy(player, level_manager.current_level)
+		spawn_score -= enemy_spawner.spawn_enemy(player, level_manager.current_level, difficulty_multiplier)
 
 func _input(event: InputEvent) -> void:
 	if event.is_released():

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bbby63pyldyiu"]
 
-[ext_resource type="Script" path="res://enemy.gd" id="1_up0hr"]
+[ext_resource type="Script" path="res://enemies/boat/aa_boat.gd" id="1_581rd"]
 [ext_resource type="Texture2D" uid="uid://jesxgryyxtja" path="res://boat-medium.png" id="2_dk1wf"]
 [ext_resource type="PackedScene" uid="uid://c0wfkm054sx6r" path="res://enemies/pantsir.tscn" id="3_eqp66"]
 [ext_resource type="PackedScene" uid="uid://ktk24ijbbbtr" path="res://explosion_spawner.tscn" id="4_tjom6"]
@@ -14,7 +14,7 @@ size = Vector2(28.835, 10)
 collision_layer = 2
 collision_mask = 512
 sync_to_physics = false
-script = ExtResource("1_up0hr")
+script = ExtResource("1_581rd")
 
 [node name="CargoPlace" type="Node2D" parent="."]
 position = Vector2(-5, 0)
@@ -43,3 +43,5 @@ editor_color = Color(0.862745, 0.0784314, 0.235294, 1)
 speed = 4.0
 
 [connection signal="destroyed" from="." to="ExplosionSpawner" method="spawn_explosions"]
+
+[editable path="CargoPlace/pantsir"]

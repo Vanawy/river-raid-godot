@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bvolwr3vtaonv" path="res://pantsir.png" id="1_b6x0n"]
 [ext_resource type="PackedScene" uid="uid://nejnlh1fk42n" path="res://enemies/anti_air_rocket_launcher.tscn" id="2_uo55c"]
-[ext_resource type="Script" path="res://components/keep_global_rotation.gd" id="3_ui67x"]
+[ext_resource type="PackedScene" uid="uid://cea1eg7qa3hl3" path="res://components/keep_global_rotation.tscn" id="3_7lc4w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q66j2"]
 atlas = ExtResource("1_b6x0n")
@@ -123,5 +123,4 @@ default_color = Color(0, 0.901961, 0, 1)
 position = Vector2(1, -4)
 detection_area = NodePath("../Area2D")
 
-[node name="KeepGlobalRotation" type="Node2D" parent="."]
-script = ExtResource("3_ui67x")
+[node name="KeepGlobalRotation" parent="." instance=ExtResource("3_7lc4w")]

@@ -12,11 +12,11 @@ func _ready() -> void:
 	#add_child()
 	pass
 	
-func spawn_enemy(player: Jet, level: Level) -> float:
+func spawn_enemy(player: Jet, level: Level, difficulty: float) -> float:
 	var k: float = randf()
 	if k < 0.3:
 		var offset: Vector2 = Vector2.UP * 256
-		spawn_aa_boat(player.global_position + offset, level)
+		spawn_aa_boat(player.global_position + offset, level, difficulty)
 		return 2
 	if k < 0.7:
 		var offset: Vector2 = Vector2.UP * 512
@@ -42,11 +42,12 @@ func spawn_jet(global_pos: Vector2, level: Level, remove_random: bool = false) -
 		level.add_child.call_deferred(enemy)
 		print("enemy jet spawned")
 
-func spawn_aa_boat(global_pos: Vector2, level: Level) -> void:
-		var enemy: Enemy = aa_boat_scene.instantiate()
+func spawn_aa_boat(global_pos: Vector2, level: Level, difficulty: float) -> void:
+		var enemy: AABoat = aa_boat_scene.instantiate()
 		var boat_width_tiles: int = 2
 		enemy.position = level.get_first_spawn_horizontal(global_pos, boat_width_tiles)
 		level.add_child.call_deferred(enemy)
+		enemy.set_difficulty.call_deferred(difficulty)
 		print("aa boat spawned")
 		print(enemy.position)
 	

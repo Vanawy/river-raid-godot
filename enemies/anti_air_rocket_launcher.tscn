@@ -42,7 +42,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_vikek")
 }],
 "loop": false,
-"name": &"default",
+"name": &"lock",
 "speed": 10.0
 }]
 
@@ -51,4 +51,5 @@ script = ExtResource("1_vvcy7")
 
 [node name="lock" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q4onu")
+animation = &"lock"
 offset = Vector2(8, 0)
