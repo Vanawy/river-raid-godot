@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://byl36k88mr2i1"]
+[gd_scene load_steps=16 format=4 uid="uid://byl36k88mr2i1"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_6mwdt"]
 [ext_resource type="Script" path="res://game_manager.gd" id="1_30pe5"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://intro.gd" id="6_x73kj"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_7g7e2"]
 [ext_resource type="Script" path="res://free_cam_controller.gd" id="10_msv50"]
+[ext_resource type="FontFile" uid="uid://bt1psjapxvvr5" path="res://Fonts/Kenney High Square.ttf" id="11_3p2k2"]
 
 [sub_resource type="Resource" id="Resource_v4ldd"]
 script = ExtResource("9_7g7e2")
@@ -29,13 +30,19 @@ duration = 1.0
 transition = 0
 ease = 2
 
+[sub_resource type="LabelSettings" id="LabelSettings_h5ou8"]
+line_spacing = 2.0
+font = ExtResource("11_3p2k2")
+font_color = Color(0, 0, 0, 1)
+
 [node name="main" type="Node2D"]
 
-[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("player", "level_manager", "enemy_spawner")]
+[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("player", "level_manager", "enemy_spawner", "score_label")]
 script = ExtResource("1_30pe5")
 player = NodePath("../Jet")
 level_manager = NodePath("../LevelManager")
 enemy_spawner = NodePath("../LevelManager/EnemySpawner")
+score_label = NodePath("../UI/Control/HBoxContainer/Score")
 
 [node name="Jet" parent="." instance=ExtResource("1_x0prs")]
 position = Vector2(160, 253)
@@ -99,6 +106,7 @@ limit_right = 320
 script = ExtResource("10_msv50")
 
 [node name="FreeCamera" type="Node2D" parent="FreeCamController" node_paths=PackedStringArray("follow_target")]
+position = Vector2(-370, -11)
 script = ExtResource("6_04mai")
 follow_mode = 1
 follow_target = NodePath("../CamTarget")
@@ -108,5 +116,30 @@ tween_on_load = false
 draw_limits = true
 
 [node name="CamTarget" type="Node2D" parent="FreeCamController"]
+position = Vector2(-370, -11)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Control"]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 62.0
+offset_bottom = 18.0
+
+[node name="Score" type="Label" parent="UI/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "0123456789"
+label_settings = SubResource("LabelSettings_h5ou8")
 
 [editable path="LevelManager"]

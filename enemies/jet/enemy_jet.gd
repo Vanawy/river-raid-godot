@@ -34,6 +34,8 @@ var velocity: Vector2 = Vector2.ZERO
 
 var is_dead: bool = false
 
+signal destroyed
+
 # @export var _flares_count = 1
 
 func _ready() -> void: 
@@ -98,6 +100,7 @@ func damage() -> void:
 	
 func death() -> void:
 	is_dead = true
+	destroyed.emit()
 	# velocity = Vector2.ZERO
 	smoke_emitter.emitting = false
 	var hitbox: Area2D = $Hitbox

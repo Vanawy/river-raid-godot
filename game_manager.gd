@@ -13,6 +13,8 @@ const KILL_SCORE: int = 500
 
 @onready var free_cam: FreeCamController = $"../FreeCamController"
 
+@export var score_label: Label
+
 var difficulty_multiplier: float = 1
 var spawn_score: float = -2
 
@@ -33,8 +35,16 @@ func _ready() -> void:
 		difficulty_multiplier += 0.2
 	)
 	
+	_update_score_label()
+	
+	enemy_spawner.enemy_killed.connect(func(score: int, pos: Vector2) -> void:
+		_add_score(score)
+		print(pos)
+	)
+	
 func _add_score(score: float) -> void:
 	game_score += score * difficulty_multiplier
+	_update_score_label()
 
 func _physics_process(delta: float) -> void:
 	if can_spawn_enemies:
@@ -45,7 +55,11 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	#time += 1 * delta
 	if spawn_score > 0 && can_spawn_enemies:
-		spawn_score -= enemy_spawner.spawn_enemy(player, level_manager.current_level, difficulty_multiplier)
+		spawn_score -= enemy_spawner.spawn_enemy(
+			player, 
+			level_manager.current_level, 
+			difficulty_multiplier
+		)
 
 func _input(event: InputEvent) -> void:
 	if event.is_released():
@@ -71,3 +85,8 @@ func enable_spawn() -> void:
 func disable_spawn() -> void:
 		print_rich("[color=green][b]ENEMIES chill![/b][/color]")
 		can_spawn_enemies = false
+
+func _update_score_label() -> void:
+	var txt := str(game_score)
+	txt = txt.pad_zeros(8)
+	score_label.text = txt
