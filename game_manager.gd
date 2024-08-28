@@ -4,7 +4,7 @@ extends Node2D
 
 var game_score: float = 0
 
-const LEVEL_SCORE: int = 10000
+const LEVEL_SCORE: int = 1000
 const KILL_SCORE: int = 500
 
 @export var player: Jet
@@ -13,7 +13,9 @@ const KILL_SCORE: int = 500
 
 @onready var free_cam: FreeCamController = $"../FreeCamController"
 
+@export_category("UI")
 @export var score_label: Label
+@export var plus_points: PlusScore
 
 var difficulty_multiplier: float = 1
 var spawn_score: float = -2
@@ -43,7 +45,9 @@ func _ready() -> void:
 	)
 	
 func _add_score(score: float) -> void:
-	game_score += score * difficulty_multiplier
+	var x := score * difficulty_multiplier
+	game_score += x
+	plus_points.display_score(x)
 	_update_score_label()
 
 func _physics_process(delta: float) -> void:

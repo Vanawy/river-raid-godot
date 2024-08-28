@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://byl36k88mr2i1"]
+[gd_scene load_steps=17 format=4 uid="uid://byl36k88mr2i1"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_6mwdt"]
 [ext_resource type="Script" path="res://game_manager.gd" id="1_30pe5"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="9_7g7e2"]
 [ext_resource type="Script" path="res://free_cam_controller.gd" id="10_msv50"]
 [ext_resource type="FontFile" uid="uid://bt1psjapxvvr5" path="res://Fonts/Kenney High Square.ttf" id="11_3p2k2"]
+[ext_resource type="Script" path="res://plusscore.gd" id="12_wehg3"]
 
 [sub_resource type="Resource" id="Resource_v4ldd"]
 script = ExtResource("9_7g7e2")
@@ -37,12 +38,13 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="main" type="Node2D"]
 
-[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("player", "level_manager", "enemy_spawner", "score_label")]
+[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("player", "level_manager", "enemy_spawner", "score_label", "plus_points")]
 script = ExtResource("1_30pe5")
 player = NodePath("../Jet")
 level_manager = NodePath("../LevelManager")
 enemy_spawner = NodePath("../LevelManager/EnemySpawner")
 score_label = NodePath("../UI/Control/HBoxContainer/Score")
+plus_points = NodePath("../UI/Control/HBoxContainer/plusscore")
 
 [node name="Jet" parent="." instance=ExtResource("1_x0prs")]
 position = Vector2(160, 253)
@@ -67,6 +69,9 @@ tile_set = ExtResource("6_ofgak")
 
 [node name="LevelManager" parent="." instance=ExtResource("3_2107l")]
 position = Vector2(160, 252)
+
+[node name="Sprite2D" parent="LevelManager" index="1"]
+visible = false
 
 [node name="Layer0" type="TileMapLayer" parent="LevelManager"]
 use_parent_material = true
@@ -141,5 +146,13 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "0123456789"
 label_settings = SubResource("LabelSettings_h5ou8")
+
+[node name="plusscore" type="Label" parent="UI/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "+200"
+label_settings = SubResource("LabelSettings_h5ou8")
+script = ExtResource("12_wehg3")
 
 [editable path="LevelManager"]

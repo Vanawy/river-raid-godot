@@ -20,14 +20,7 @@ func target_detected(target : Node2D) -> void:
 	var rockets_shot: float = 0
 	var diff: float = difficulty
 	while diff > 0:
-		if diff > 1:
-			lock.visible = true
-			lock.play("lock")
-			lock.set_frame_and_progress(0, 0)
-			await lock.animation_finished
-			launch_rocket(target)
-			rockets_shot += 1
-		elif randf() < diff:
+		if randf() < diff:
 			lock.visible = true
 			lock.play("lock")
 			lock.set_frame_and_progress(0, 0)
