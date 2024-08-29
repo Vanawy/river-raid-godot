@@ -1,33 +1,13 @@
-[gd_scene load_steps=34 format=3 uid="uid://chvnmx1w7aeo4"]
+[gd_scene load_steps=31 format=3 uid="uid://chvnmx1w7aeo4"]
 
 [ext_resource type="Script" path="res://Jet.gd" id="1_tmj2b"]
 [ext_resource type="SpriteFrames" uid="uid://boaxed37mb2im" path="res://jet/jet_blue_sprites.tres" id="2_6il8l"]
 [ext_resource type="Material" uid="uid://luwq0b8jh33i" path="res://jet/jet_smoke.tres" id="3_6wpm8"]
 [ext_resource type="Texture2D" uid="uid://b58yt6ks1uidw" path="res://smoke1x1.png" id="3_888rj"]
-[ext_resource type="Texture2D" uid="uid://bxl32a122p23a" path="res://flare.png" id="4_nfkh3"]
-[ext_resource type="Texture2D" uid="uid://cte82o442osiw" path="res://flare-trail.png" id="5_evvcj"]
+[ext_resource type="PackedScene" uid="uid://dyn8h7d3n0imf" path="res://jet/flares.tscn" id="5_2r8uh"]
 [ext_resource type="Script" path="res://jet/reload_indicators.gd" id="7_eykol"]
 [ext_resource type="Texture2D" uid="uid://lrxhb6mlh7ql" path="res://jet/rocket_indicator-Sheet.png" id="7_r8bui"]
 [ext_resource type="Texture2D" uid="uid://ccybq3qtjqemh" path="res://jet/flares_indicator.png" id="9_apb75"]
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6q6oa"]
-lifetime_randomness = 0.3
-particle_flag_disable_z = true
-inherit_velocity_ratio = 1.0
-direction = Vector3(0, 1, 0)
-spread = 180.0
-initial_velocity_min = 30.0
-initial_velocity_max = 30.0
-gravity = Vector3(0, 98, 0)
-sub_emitter_mode = 1
-sub_emitter_frequency = 100.0
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p308w"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 1.0
-gravity = Vector3(0, 0, 0)
-color = Color(0.839216, 0.839216, 0.839216, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ml3tu"]
 radius = 3.0
@@ -224,26 +204,7 @@ process_material = ExtResource("3_6wpm8")
 texture = ExtResource("3_888rj")
 visibility_rect = Rect2(-1, 0, 2, 2)
 
-[node name="Flares" type="GPUParticles2D" parent="."]
-z_index = -5
-position = Vector2(0, 4)
-emitting = false
-amount = 32
-sub_emitter = NodePath("FlaresTrails")
-process_material = SubResource("ParticleProcessMaterial_6q6oa")
-texture = ExtResource("4_nfkh3")
-lifetime = 5.0
-one_shot = true
-explosiveness = 0.95
-
-[node name="FlaresTrails" type="GPUParticles2D" parent="Flares"]
-z_index = -7
-position = Vector2(0, -4)
-emitting = false
-amount = 300
-process_material = SubResource("ParticleProcessMaterial_p308w")
-texture = ExtResource("5_evvcj")
-lifetime = 0.4
+[node name="Flares" parent="." instance=ExtResource("5_2r8uh")]
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 256

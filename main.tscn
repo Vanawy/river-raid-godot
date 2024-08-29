@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://byl36k88mr2i1"]
+[gd_scene load_steps=21 format=4 uid="uid://byl36k88mr2i1"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_6mwdt"]
 [ext_resource type="Script" path="res://game_manager.gd" id="1_30pe5"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://bt1psjapxvvr5" path="res://Fonts/Kenney High Square.ttf" id="11_3p2k2"]
 [ext_resource type="Script" path="res://plusscore.gd" id="12_wehg3"]
 [ext_resource type="PackedScene" uid="uid://d36pnpljbr751" path="res://jet/rocket.tscn" id="13_3fobc"]
+[ext_resource type="PackedScene" uid="uid://dyn8h7d3n0imf" path="res://jet/flares.tscn" id="13_tqbey"]
 [ext_resource type="PackedScene" uid="uid://bmd1msckqvf8s" path="res://enemies/rocket.tscn" id="14_4rxy8"]
 [ext_resource type="PackedScene" uid="uid://cm4eswitbf2k2" path="res://enemies/jet/enemy_jet.tscn" id="15_4sbbe"]
 
@@ -161,6 +162,9 @@ script = ExtResource("12_wehg3")
 [node name="PrerenderScenes" type="Node2D" parent="."]
 z_index = -100
 position = Vector2(107, 137)
+
+[node name="Flares" parent="PrerenderScenes" instance=ExtResource("13_tqbey")]
+position = Vector2(6, 15)
 
 [node name="EnemyJet" parent="PrerenderScenes" instance=ExtResource("15_4sbbe")]
 position = Vector2(14, 2)
