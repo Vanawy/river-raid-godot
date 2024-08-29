@@ -3,7 +3,7 @@ class_name EnemyJet
 
 
 var H_SPEED: float = 70
-var BASE_V_SPEED: float = 70
+@export var BASE_V_SPEED: float = 70
 var V_SPEED_CHANGE: float = 32
 
 var move_direction: float = 0;

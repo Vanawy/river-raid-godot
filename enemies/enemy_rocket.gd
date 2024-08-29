@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 func confuse() -> void:
 	is_confused = true
 	target = null
-	target_rotation += [-PI/2, PI/2].pick_random()
+	target_rotation += [-PI/2, PI/2].pick_random() + randf() * 0.4 - 0.2
 	
 	
 func destroy() -> void:

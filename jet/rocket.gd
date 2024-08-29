@@ -1,7 +1,7 @@
 extends Area2D
 class_name Rocket
 
-var speed: float = 100
+@export var speed: float = 100
 
 @onready var smoke: GPUParticles2D = $Smoke
 @onready var sprite: AnimatedSprite2D = $Sprite

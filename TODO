@@ -14,10 +14,10 @@ Todo:
   ☐ Add a UI with a life counter, score, and fuel gauge. 
     ☐ Difficulty UI
     ✔ Score UI @done(24-08-27 22:54)
-    ☐ The fuel gauge will drain slowly, and the player will die if it reaches “empty”
+    ✘ The fuel gauge will drain slowly, and the player will die if it reaches “empty” @cancelled(24-08-29 21:34)
 
   ✔ AA shoots more rockets on higher difficulty @done(24-08-25 22:00)
-  ☐ Add fuel depots. Flying over these will replenish the player's fuel reserves. The player can shoot and destroy fuel depots, but colliding with them doesn't kill the player.
+  ✘ Add fuel depots. Flying over these will replenish the player's fuel reserves. The player can shoot and destroy fuel depots, but colliding with them doesn't kill the player. @cancelled(24-08-29 21:34)
   ✔ Give the player the ability to shoot things! @done(24-08-23 00:40)
   ✔ Shooting things increases the player score. @done(24-08-27 22:54)
 
