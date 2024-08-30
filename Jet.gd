@@ -23,6 +23,8 @@ var V_SPEED_CHANGE: float = 40
 
 @onready var rocket_scn: PackedScene = preload("res://jet/rocket.tscn")
 
+@onready var countermeasures_area : Area2D = $CounterMeasuresArea
+@onready var countermeasures_effect_area : Area2D = $CounterMeasuresEffectArea
 
 var velocity: Vector2 = Vector2.ZERO
 var state : States = States.FORWARD
@@ -32,16 +34,16 @@ var is_dead: bool = false
 var input_horizontal: float = 0
 
 
+
 signal died
 
 func _ready() -> void: 
 	var hitbox : Area2D = $Hitbox
 	hitbox.body_entered.connect(on_collision)
-	var countermeasures_area : Area2D = $CounterMeasuresArea
-	countermeasures_area.body_entered.connect(func(body: Node2D) -> void:
-		if body is EnemyRocket:
-			launch_flares(body)
-	)
+	#countermeasures_area.body_entered.connect(func(body: Node2D) -> void:
+		#if body is EnemyRocket:
+			#launch_flares(body)
+	#)
 	
 
 func on_collision(body : Node2D) -> void:
@@ -64,6 +66,23 @@ func _process(_delta: float) -> void:
 	update_state()
 	if Input.is_action_just_pressed("player_fire"):
 		fire()
+	
+	_check_flares()
+	
+func _check_flares() -> void:
+	var is_flares_launched: bool = false
+	if countermeasures_area.has_overlapping_bodies():
+		for body in countermeasures_effect_area.get_overlapping_bodies():
+			if body is EnemyRocket:
+				if body.is_confused:
+					continue
+				if not is_flares_launched:
+					if launch_flares():
+						is_flares_launched = true
+				if is_flares_launched:
+					if is_instance_valid(body) and !body.is_confused:
+						body.confuse()
+		
 		
 func fire() -> void:
 	if !rockets.fire():
@@ -130,16 +149,11 @@ func death() -> void:
 	preload("res://jet/explosion_right.tscn"),
 ]
 
-func launch_flares(rocket: EnemyRocket) -> void:
-		if rocket.is_confused:
-			return
+func launch_flares() -> bool:
 		if !flares.fire():
-			print("no flares left")
-			return
+			return false
 		flares_emitter.restart()
-		await get_tree().create_timer(0.1).timeout
-		if (is_instance_valid(rocket)):
-			rocket.confuse()
+		return true
 
 func create_explosion() -> void:
 	var n: int = 0

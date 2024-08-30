@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://chvnmx1w7aeo4"]
+[gd_scene load_steps=32 format=3 uid="uid://chvnmx1w7aeo4"]
 
 [ext_resource type="Script" path="res://Jet.gd" id="1_tmj2b"]
 [ext_resource type="SpriteFrames" uid="uid://boaxed37mb2im" path="res://jet/jet_blue_sprites.tres" id="2_6il8l"]
@@ -14,7 +14,10 @@ radius = 3.0
 height = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hb738"]
-size = Vector2(42, 50)
+size = Vector2(38, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7nuh0"]
+size = Vector2(98, 91)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1q7eu"]
 radius = 2.0
@@ -205,6 +208,7 @@ texture = ExtResource("3_888rj")
 visibility_rect = Rect2(-1, 0, 2, 2)
 
 [node name="Flares" parent="." instance=ExtResource("5_2r8uh")]
+amount = 64
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 256
@@ -221,6 +225,15 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CounterMeasuresArea"]
 position = Vector2(0, 25)
 shape = SubResource("RectangleShape2D_hb738")
+debug_color = Color(0.756732, 0.321803, 0.810659, 0.42)
+
+[node name="CounterMeasuresEffectArea" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CounterMeasuresEffectArea"]
+position = Vector2(0, 45.5)
+shape = SubResource("RectangleShape2D_7nuh0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)

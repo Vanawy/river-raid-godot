@@ -21,9 +21,10 @@ Todo:
   ✔ Give the player the ability to shoot things! @done(24-08-23 00:40)
   ✔ Shooting things increases the player score. @done(24-08-27 22:54)
 
-  ☐ Flares fixes
-    ☐ Confuse multiple rockets with single flare launch
+  ✔ Flares fixes @done(24-08-30 13:49)
+    ✔ Confuse multiple rockets with single flare launch @done(24-08-30 13:49)
     ☐ Flares auto launch toggle
+    ✔ FIx bug when flares aren't launching if rocket enters area before flare became available @done(24-08-30 13:49)
 
 
 Stretch:
