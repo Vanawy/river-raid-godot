@@ -16,14 +16,18 @@ const KILL_SCORE: int = 500
 @export_category("UI")
 @export var score_label: Label
 @export var plus_points: PlusScore
+@export var combo_label: Label
 
 var difficulty_multiplier: float = 1
 var spawn_score: float = -2
 
 var can_spawn_enemies: bool = false
+var is_paused: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	assert(player != null)
 	assert(level_manager != null)
 	assert(enemy_spawner != null)
@@ -32,9 +36,12 @@ func _ready() -> void:
 	level_manager.level_finished.connect(disable_spawn)
 	player.died.connect(disable_spawn)
 	
+	combo_label.text = "X" + str(difficulty_multiplier)
+	
 	level_manager.level_changed.connect(func() -> void:
 		_add_score(LEVEL_SCORE)
 		difficulty_multiplier += 0.2
+		combo_label.text = "X" + str(difficulty_multiplier)
 	)
 	
 	_update_score_label()
@@ -51,7 +58,7 @@ func _add_score(score: float) -> void:
 	_update_score_label()
 
 func _physics_process(delta: float) -> void:
-	if can_spawn_enemies:
+	if can_spawn_enemies && !is_paused:
 		spawn_score += delta * difficulty_multiplier
 	#print(spawn_score)
 
@@ -67,13 +74,14 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_released():
-		#if event.as_text() == "F1":
-			#var tree := get_tree()
-			#tree.paused = !tree.paused
-			#if tree.paused:
-				#print("GAME PAUSED")
-			#else:
-				#print("GAME RESUMED")
+		if event.as_text() == "Escape":
+			var tree := get_tree()
+			tree.paused = !tree.paused
+			is_paused = tree.paused
+			if tree.paused:
+				print("GAME PAUSED")
+			else:
+				print("GAME RESUMED")
 		if event.as_text() == "F2":
 			get_tree().reload_current_scene()
 		if event.as_text() == "F3":

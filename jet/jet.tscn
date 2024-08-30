@@ -248,7 +248,7 @@ one_shot = true
 position = Vector2(-11, 1)
 script = ExtResource("7_eykol")
 indicators_in_row = 1
-reload_time = 30.0
+reload_time = 15.0
 
 [node name="Indicator" type="AnimatedSprite2D" parent="Indicators/Flares"]
 sprite_frames = SubResource("SpriteFrames_2esu3")

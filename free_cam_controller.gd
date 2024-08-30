@@ -14,6 +14,7 @@ const PRIORITY = 500
 var cam_priority: int = 0
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	cam_priority = camera.priority
 	
 func toggle() -> void:

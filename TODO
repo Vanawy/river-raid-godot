@@ -11,8 +11,8 @@ Todo:
     ✔ Some boats spawn with AA @done(24-08-23 00:38)
     ✘ AA on river banks @cancelled(24-08-25 20:50)
 
-  ☐ Add a UI with a life counter, score, and fuel gauge. 
-    ☐ Difficulty UI
+  ✔ Add a UI with a life counter, score, and fuel gauge. @done(24-08-30 13:31)
+    ✔ Difficulty UI @done(24-08-30 13:31)
     ✔ Score UI @done(24-08-27 22:54)
     ✘ The fuel gauge will drain slowly, and the player will die if it reaches “empty” @cancelled(24-08-29 21:34)
 
@@ -20,6 +20,10 @@ Todo:
   ✘ Add fuel depots. Flying over these will replenish the player's fuel reserves. The player can shoot and destroy fuel depots, but colliding with them doesn't kill the player. @cancelled(24-08-29 21:34)
   ✔ Give the player the ability to shoot things! @done(24-08-23 00:40)
   ✔ Shooting things increases the player score. @done(24-08-27 22:54)
+
+  ☐ Flares fixes
+    ☐ Confuse multiple rockets with single flare launch
+    ☐ Flares auto launch toggle
 
 
 Stretch:
